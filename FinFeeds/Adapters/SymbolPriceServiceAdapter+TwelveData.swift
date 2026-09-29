@@ -6,12 +6,17 @@ import TwelveData
 
 extension ServicesLocator {
     static var symbolPriceService: any SymbolPriceService {
-        TwelveDataSymbolPriceService(socket: websocket)
+        TwelveDataSymbolPriceService(websocket)
     }
 }
 
 struct TwelveDataSymbolPriceService: SymbolPriceService, Sendable {
-    let socket: TwelveDataWebsocket
+    private let socket: TwelveDataWebsocket
+    private let subscriptionReducer = CountedSetReducer<String>()
+
+    init(_ socket: TwelveDataWebsocket) {
+        self.socket = socket
+    }
 
     var symbolPriceStream: AsyncStream<SymbolPrice> {
         return AsyncStream<SymbolPrice> { continuation in
@@ -32,13 +37,23 @@ struct TwelveDataSymbolPriceService: SymbolPriceService, Sendable {
         }
     }
 
-    func subsribe(symbols: Set<String>) {
+    func subsribe(_ symbols: Set<String>) {
+        let symbols = subscriptionReducer.insert(symbols)
+        guard symbols.isEmpty == false else {
+            return
+        }
+
         Task {
             await socket.subscribe(symbols: symbols)
         }
     }
 
-    func unsubsribe(symbols: Set<String>) {
+    func unsubsribe(_ symbols: Set<String>) {
+        let symbols = subscriptionReducer.remove(symbols)
+        guard symbols.isEmpty == false else {
+            return
+        }
+
         Task {
             await socket.unsubscribe(symbols: symbols)
         }
