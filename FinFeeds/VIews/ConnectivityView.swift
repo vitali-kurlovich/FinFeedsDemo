@@ -4,30 +4,20 @@
 
 import SwiftUI
 
-enum StateViewStyle {
+enum ConnectivityViewStyle {
     case compact
     case regular
 }
 
-extension EnvironmentValues {
-    @Entry var stateViewStyle = StateViewStyle.compact
+extension ConnectivityView {
+    typealias State = ConnectivityState
 }
 
-extension StateView {
-    enum State: Equatable {
-        case disconnected
-        case connecting
-        case connected
-        case reconnecting
-        case failed(String)
-    }
-}
-
-struct StateView: View {
+struct ConnectivityView: View {
     let state: State
 
-    @Environment(\.stateViewStyle)
-    var stateViewStyle
+    @Environment(\.connectivityViewStyle)
+    var connectivityViewStyle
 
     var body: some View {
         HStack {
@@ -39,14 +29,14 @@ struct StateView: View {
                     Circle().fill(Color.white)
                 }.shadow(radius: 5, y: 3)
 
-            if stateViewStyle == .regular {
+            if connectivityViewStyle == .regular {
                 Text(text)
             }
         }
     }
 }
 
-private extension StateView {
+private extension ConnectivityView {
     var color: Color {
         switch state {
         case .disconnected:
@@ -81,24 +71,36 @@ private extension StateView {
     }
 }
 
+extension EnvironmentValues {
+    @Entry var connectivityViewStyle = ConnectivityViewStyle.compact
+}
+
+extension View {
+    func connectivityViewStyle(style: ConnectivityViewStyle) -> some View {
+        environment(\.connectivityViewStyle, style)
+    }
+}
+
 #Preview {
     HStack(spacing: 66) {
         VStack(alignment: .leading) {
-            StateView(state: .disconnected)
-            StateView(state: .connecting)
-            StateView(state: .connected)
-            StateView(state: .reconnecting)
-            StateView(state: .failed(""))
-            StateView(state: .failed("Error description"))
-        }.environment(\.stateViewStyle, .regular)
+            ConnectivityView(state: .disconnected)
+            ConnectivityView(state: .connecting)
+            ConnectivityView(state: .connected)
+            ConnectivityView(state: .reconnecting)
+            ConnectivityView(state: .failed(""))
+            ConnectivityView(state: .failed("Error description"))
+        }
+        .connectivityViewStyle(style: .regular)
         VStack(alignment: .leading) {
-            StateView(state: .disconnected)
-            StateView(state: .connecting)
-            StateView(state: .connected)
-            StateView(state: .reconnecting)
-            StateView(state: .failed(""))
-            StateView(state: .failed("Error description"))
-        }.environment(\.stateViewStyle, .compact)
+            ConnectivityView(state: .disconnected)
+            ConnectivityView(state: .connecting)
+            ConnectivityView(state: .connected)
+            ConnectivityView(state: .reconnecting)
+            ConnectivityView(state: .failed(""))
+            ConnectivityView(state: .failed("Error description"))
+        }
+        .connectivityViewStyle(style: .compact)
     }
     .frame(width: 700, height: 180)
 }
