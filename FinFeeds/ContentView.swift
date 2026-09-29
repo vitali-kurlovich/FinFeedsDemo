@@ -7,6 +7,18 @@ struct ContentView: View {
     @State var state: ConnectivityView.State = .disconnected
 
     var body: some View {
+        SymbolPricesUpdaterView { prices in
+            Table(prices) {
+                TableColumn("Symbol") { price in
+                    Text(price.symbol)
+                }
+                .width(min: 44, max: 88)
+                TableColumn("Price") { price in
+                    Text(price.price, format: .number)
+                }
+            }
+        }
+
         Button {
             Task {
                 let websocket = ServicesLocator.websocket
@@ -22,15 +34,6 @@ struct ContentView: View {
         } label: {
             Text("Connect")
             ConnectivityUpdaterView()
-        }
-
-        .task(name: "messages") {
-            let websocket = ServicesLocator.websocket
-            Task {
-                for await price in await websocket.prices {
-                    messages.append(price)
-                }
-            }
         }
     }
 }

@@ -5,6 +5,7 @@ import SwiftUI
         WindowGroup {
             ContentView()
                 .connectivityService(ServicesLocator.connectivityService)
+                .symbolPriceService(ServicesLocator.symbolPriceService)
         }
     }
 }
