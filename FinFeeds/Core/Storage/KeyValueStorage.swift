@@ -6,6 +6,9 @@ protocol KeyValueStorage {
     associatedtype Key: Hashable
     associatedtype Value
 
-    func set(value: Value?, for key: Key)
     func value(for key: Key) -> Value?
+}
+
+protocol MutableKeyValueStorage: KeyValueStorage {
+    func set(value: Value?, for key: Key)
 }
