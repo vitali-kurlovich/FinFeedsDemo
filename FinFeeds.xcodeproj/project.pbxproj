@@ -10,14 +10,30 @@
 		54DDDAB6306BEE5400F169D6 /* TwelveData in Frameworks */ = {isa = PBXBuildFile; productRef = 54DDDAB5306BEE5400F169D6 /* TwelveData */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		54DDDB68306CDA2400F169D6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 000000000000000000000000 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 000000000000000100000000;
+			remoteInfo = FinFeeds;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		000000000000000000000120 /* FinFeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinFeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		54DDDB64306CDA2400F169D6 /* FinFeedsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FinFeedsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		000000000000000000000010 /* FinFeeds */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = FinFeeds;
+			sourceTree = "<group>";
+		};
+		54DDDB65306CDA2400F169D6 /* FinFeedsTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = FinFeedsTests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -29,6 +45,11 @@
 				54DDDAB6306BEE5400F169D6 /* TwelveData in Frameworks */,
 			);
 		};
+		54DDDB61306CDA2400F169D6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			files = (
+			);
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -36,6 +57,7 @@
 			isa = PBXGroup;
 			children = (
 				000000000000000000000010 /* FinFeeds */,
+				54DDDB65306CDA2400F169D6 /* FinFeedsTests */,
 				000000000000000000000020 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -44,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				000000000000000000000120 /* FinFeeds.app */,
+				54DDDB64306CDA2400F169D6 /* FinFeedsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -72,6 +95,27 @@
 			productReference = 000000000000000000000120 /* FinFeeds.app */;
 			productType = "com.apple.product-type.application";
 		};
+		54DDDB63306CDA2400F169D6 /* FinFeedsTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 54DDDB6A306CDA2400F169D6 /* Build configuration list for PBXNativeTarget "FinFeedsTests" */;
+			buildPhases = (
+				54DDDB60306CDA2400F169D6 /* Sources */,
+				54DDDB61306CDA2400F169D6 /* Frameworks */,
+				54DDDB62306CDA2400F169D6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				54DDDB69306CDA2400F169D6 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				54DDDB65306CDA2400F169D6 /* FinFeedsTests */,
+			);
+			name = FinFeedsTests;
+			productName = FinFeedsTests;
+			productReference = 54DDDB64306CDA2400F169D6 /* FinFeedsTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -79,11 +123,15 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2630;
+				LastSwiftUpdateCheck = 2700;
 				LastUpgradeCheck = 2700;
 				TargetAttributes = {
 					000000000000000100000000 = {
 						CreatedOnToolsVersion = 26.3;
+					};
+					54DDDB63306CDA2400F169D6 = {
+						CreatedOnToolsVersion = 27.0;
+						TestTargetID = 000000000000000100000000;
 					};
 				};
 			};
@@ -105,12 +153,18 @@
 			projectRoot = "";
 			targets = (
 				000000000000000100000000 /* FinFeeds */,
+				54DDDB63306CDA2400F169D6 /* FinFeedsTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		000000000000000140000000 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			files = (
+			);
+		};
+		54DDDB62306CDA2400F169D6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
 			);
@@ -123,7 +177,20 @@
 			files = (
 			);
 		};
+		54DDDB60306CDA2400F169D6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			files = (
+			);
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		54DDDB69306CDA2400F169D6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 000000000000000100000000 /* FinFeeds */;
+			targetProxy = 54DDDB68306CDA2400F169D6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		000000000000000011000000 /* Debug configuration for PBXProject "FinFeeds" */ = {
@@ -354,6 +421,58 @@
 			};
 			name = Release;
 		};
+		54DDDB6B306CDA2400F169D6 /* Debug configuration for PBXNativeTarget "FinFeedsTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5SLX4F29EU;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.svg.FinFeedsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FinFeeds.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FinFeeds";
+				XROS_DEPLOYMENT_TARGET = 27.0;
+			};
+			name = Debug;
+		};
+		54DDDB6C306CDA2400F169D6 /* Release configuration for PBXNativeTarget "FinFeedsTests" */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5SLX4F29EU;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.svg.FinFeedsTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2,7";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FinFeeds.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FinFeeds";
+				XROS_DEPLOYMENT_TARGET = 27.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -370,6 +489,14 @@
 			buildConfigurations = (
 				000000000000000111000000 /* Debug configuration for PBXNativeTarget "FinFeeds" */,
 				000000000000000112000000 /* Release configuration for PBXNativeTarget "FinFeeds" */,
+			);
+			defaultConfigurationName = Release;
+		};
+		54DDDB6A306CDA2400F169D6 /* Build configuration list for PBXNativeTarget "FinFeedsTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				54DDDB6B306CDA2400F169D6 /* Debug configuration for PBXNativeTarget "FinFeedsTests" */,
+				54DDDB6C306CDA2400F169D6 /* Release configuration for PBXNativeTarget "FinFeedsTests" */,
 			);
 			defaultConfigurationName = Release;
 		};
