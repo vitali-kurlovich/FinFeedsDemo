@@ -4,13 +4,7 @@
 
 import TwelveData
 
-extension ServicesLocator {
-    static var symbolPriceService: any SymbolPriceService {
-        TwelveDataSymbolPriceService(websocket)
-    }
-}
-
-struct TwelveDataSymbolPriceService: SymbolPriceService, Sendable {
+nonisolated struct TwelveDataSymbolPriceAdapter: SymbolPriceService, Sendable {
     private let socket: TwelveDataWebsocket
     private let subscriptionReducer = CountedSetReducer<String>()
 
@@ -18,7 +12,7 @@ struct TwelveDataSymbolPriceService: SymbolPriceService, Sendable {
         self.socket = socket
     }
 
-    var symbolPriceStream: AsyncStream<SymbolPrice> {
+    var prices: AsyncStream<SymbolPrice> {
         return AsyncStream<SymbolPrice> { continuation in
             let task = Task {
 
@@ -61,7 +55,7 @@ struct TwelveDataSymbolPriceService: SymbolPriceService, Sendable {
 }
 
 extension SymbolPrice {
-    init(_ event: TwelvedataPriceEvent) {
+    nonisolated init(_ event: TwelvedataPriceEvent) {
         self.init(
             symbol: event.symbol,
             timestamp: event.timestamp,

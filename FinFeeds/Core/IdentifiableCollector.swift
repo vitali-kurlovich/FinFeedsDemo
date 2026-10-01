@@ -2,7 +2,7 @@
 //  Created by Kurlovich Vitali on 9/30/26.
 //
 
-public struct IdentifiableCollector<Element: Equatable & Identifiable>: Equatable {
+public nonisolated struct IdentifiableCollector<Element: Equatable & Identifiable>: Equatable {
     private var storage: [Element]
 
     public init<S: Sequence>(_ elements: S) where S.Element == Self.Element {
@@ -54,7 +54,7 @@ extension IdentifiableCollector: Sendable where Element: Sendable {}
 extension IdentifiableCollector: Sequence {
     public typealias Iterator = Array<Element>.Iterator
 
-    public func makeIterator() -> Iterator {
+    public nonisolated func makeIterator() -> Iterator {
         storage.makeIterator()
     }
 }
@@ -62,15 +62,15 @@ extension IdentifiableCollector: Sequence {
 extension IdentifiableCollector: RandomAccessCollection {
     public typealias Index = Array<Element>.Index
 
-    public var startIndex: Index {
+    public nonisolated var startIndex: Index {
         storage.startIndex
     }
 
-    public var endIndex: Index {
+    public nonisolated var endIndex: Index {
         storage.endIndex
     }
 
-    public subscript(position: Index) -> Element {
+    public nonisolated subscript(position: Index) -> Element {
         storage[position]
     }
 }

@@ -5,7 +5,7 @@
 /// Sequence+Sort
 extension Sequence {
     /// Sorts a sequence based on a Comparable property extracted via a KeyPath.
-    func sorted<T: Comparable>(by keyPath: KeyPath<Element, T>, descending: Bool = false) -> [Element] {
+    nonisolated func sorted<T: Comparable>(by keyPath: KeyPath<Element, T>, descending: Bool = false) -> [Element] {
         sorted { a, b in
             if descending {
                 return a[keyPath: keyPath] > b[keyPath: keyPath]

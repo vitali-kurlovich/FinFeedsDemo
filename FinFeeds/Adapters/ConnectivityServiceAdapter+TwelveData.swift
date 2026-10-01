@@ -4,13 +4,7 @@
 
 import TwelveData
 
-extension ServicesLocator {
-    static var connectivityService: any ConnectivityService {
-        TwelveDataConnectivityService(socket: websocket)
-    }
-}
-
-struct TwelveDataConnectivityService: ConnectivityService, Sendable {
+struct TwelveDataConnectivityAdapter: ConnectivityService, Sendable {
     let socket: TwelveDataWebsocket
 
     var connectivity: AsyncStream<ConnectivityState> {
@@ -33,8 +27,8 @@ struct TwelveDataConnectivityService: ConnectivityService, Sendable {
     }
 }
 
-extension ConnectivityView.State {
-    init(_ state: TwelveDataWebsocket.State) {
+extension ConnectivityState {
+    nonisolated init(_ state: TwelveDataWebsocket.State) {
         switch state {
         case .disconnected:
             self = .disconnected

@@ -4,7 +4,7 @@
 
 import Foundation
 
-struct CountedSetReducer<Value: Hashable> {
+nonisolated struct CountedSetReducer<Value: Hashable & Sendable>: @unchecked Sendable {
     let countedSet = NSCountedSet()
 
     func insert(_ set: Set<Value>) -> Set<Value> {

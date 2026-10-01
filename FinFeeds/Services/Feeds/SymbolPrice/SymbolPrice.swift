@@ -4,7 +4,7 @@
 
 import Foundation
 
-struct SymbolPrice: Equatable, Sendable {
+nonisolated struct SymbolPrice: Equatable, Codable, Sendable {
     var symbol: String
     var timestamp: Date
     var price: Decimal

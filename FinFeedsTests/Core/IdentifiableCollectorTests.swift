@@ -3,6 +3,7 @@
 //
 
 @testable import FinFeeds
+import Foundation
 import Testing
 
 struct MocElement: Equatable, Identifiable {
