@@ -3,7 +3,7 @@ import TwelveData
 
 struct ContentView: View {
     @Environment(\.symbolPriceService)
-    private var symbolPriceService
+    private var service
 
     var body: some View {
         SymbolPricesUpdaterView { prices in
@@ -19,7 +19,7 @@ struct ContentView: View {
         }
 
         Button {
-            symbolPriceService?.subsribe([
+            service.subsribe([
                 "AAPL",
                 "RY",
                 "RY:TSX",

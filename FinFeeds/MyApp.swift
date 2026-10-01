@@ -6,6 +6,9 @@ import SwiftUI
             ContentView()
                 .connectivityService(ServicesLocator.connectivityService)
                 .symbolPriceService(ServicesLocator.symbolPriceService)
+                .symbolPriceFeedsService(
+                    ServicesLocator.symbolPriceFeedsService
+                )
         }
     }
 }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		54DDDAB6306BEE5400F169D6 /* TwelveData in Frameworks */ = {isa = PBXBuildFile; productRef = 54DDDAB5306BEE5400F169D6 /* TwelveData */; };
+		54DDDBB3306D477E00F169D6 /* Caches in Frameworks */ = {isa = PBXBuildFile; productRef = 54DDDBB2306D477E00F169D6 /* Caches */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,7 @@
 			isa = PBXFrameworksBuildPhase;
 			files = (
 				54DDDAB6306BEE5400F169D6 /* TwelveData in Frameworks */,
+				54DDDBB3306D477E00F169D6 /* Caches in Frameworks */,
 			);
 		};
 		54DDDB61306CDA2400F169D6 /* Frameworks */ = {
@@ -58,6 +60,7 @@
 			children = (
 				000000000000000000000010 /* FinFeeds */,
 				54DDDB65306CDA2400F169D6 /* FinFeedsTests */,
+				54DDDBB1306D477E00F169D6 /* Frameworks */,
 				000000000000000000000020 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -69,6 +72,13 @@
 				54DDDB64306CDA2400F169D6 /* FinFeedsTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		54DDDBB1306D477E00F169D6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -90,6 +100,7 @@
 			name = FinFeeds;
 			packageProductDependencies = (
 				54DDDAB5306BEE5400F169D6 /* TwelveData */,
+				54DDDBB2306D477E00F169D6 /* Caches */,
 			);
 			productName = MyApp;
 			productReference = 000000000000000000000120 /* FinFeeds.app */;
@@ -146,6 +157,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				54DDDAB4306BEE5400F169D6 /* XCRemoteSwiftPackageReference "swift-twelvedata" */,
+				54DDDBB0306D470600F169D6 /* XCRemoteSwiftPackageReference "swift-data-structures" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = 000000000000000000000020 /* Products */;
@@ -368,7 +380,7 @@
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Debug;
@@ -416,7 +428,7 @@
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = "1,2,7";
 			};
 			name = Release;
@@ -511,6 +523,14 @@
 				minimumVersion = 0.0.1;
 			};
 		};
+		54DDDBB0306D470600F169D6 /* XCRemoteSwiftPackageReference "swift-data-structures" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/vitali-kurlovich/swift-data-structures";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -518,6 +538,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 54DDDAB4306BEE5400F169D6 /* XCRemoteSwiftPackageReference "swift-twelvedata" */;
 			productName = TwelveData;
+		};
+		54DDDBB2306D477E00F169D6 /* Caches */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54DDDBB0306D470600F169D6 /* XCRemoteSwiftPackageReference "swift-data-structures" */;
+			productName = Caches;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
