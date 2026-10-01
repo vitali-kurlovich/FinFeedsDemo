@@ -5,11 +5,11 @@
 import SwiftUI
 
 extension EnvironmentValues {
-    @Entry var symbolPriceService: any SymbolPriceService? = nil
+    @Entry var symbolPriceService = ServicesLocator.symbolPriceService
 }
 
 extension View {
-    func symbolPriceService(_ service: any SymbolPriceService?) -> some View {
+    func symbolPriceService(_ service: any SymbolPriceService) -> some View {
         environment(\.symbolPriceService, service)
     }
 }
@@ -21,7 +21,7 @@ enum SymbolPriceOrder: Equatable, Sendable {
 
 struct SymbolPricesUpdaterView<Content: View>: View {
     @Environment(\.symbolPriceService)
-    var symbolPriceService
+    private var service
 
     @State
     private var prices: [SymbolPrice] = []
@@ -39,14 +39,10 @@ struct SymbolPricesUpdaterView<Content: View>: View {
 
     var body: some View {
         SymbolPricesView(prices: $prices, content: content)
-            .task {
-                guard let stream = symbolPriceService?.symbolPriceStream else {
-                    // TODO: Error state
-                    return
-                }
-
+            .task(name: "Prices stream") {
                 Task {
-                    for await price in stream {
+
+                    for await price in service.prices {
                         if let index = prices.firstIndex(where: { price.symbol == $0.symbol }) {
                             prices[index] = price
                         } else {

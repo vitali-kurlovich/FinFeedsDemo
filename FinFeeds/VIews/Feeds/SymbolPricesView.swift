@@ -5,7 +5,7 @@
 import SwiftUI
 
 extension SymbolPrice: Identifiable {
-    var id: String {
+    nonisolated var id: String {
         symbol
     }
 }
@@ -27,7 +27,9 @@ struct SymbolPricesView<Content: View>: View {
     var body: some View {
         content(checkedPrices)
     }
+}
 
+extension SymbolPricesView {
     private var checkedPrices: [SymbolPrice] {
         assert(Set(prices.lazy.map { $0.id }).count == prices.count)
         return prices
