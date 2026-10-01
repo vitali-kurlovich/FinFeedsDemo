@@ -5,11 +5,11 @@
 import SwiftUI
 
 extension EnvironmentValues {
-    @Entry var connectivityService: any ConnectivityService? = nil
+    @Entry var connectivityService = ServicesLocator.connectivityService
 }
 
 extension View {
-    func connectivityService(_ service: any ConnectivityService?) -> some View {
+    func connectivityService(_ service: any ConnectivityService) -> some View {
         environment(\.connectivityService, service)
     }
 }
@@ -19,21 +19,14 @@ struct ConnectivityUpdaterView: View {
     private var state: ConnectivityState = .disconnected
 
     @Environment(\.connectivityService)
-    var connectivityService
+    var service
 
     var body: some View {
         ConnectivityView(state: state)
-            .task(name: "connectivity") {
-                guard let connectivity = connectivityService?.connectivity else {
-                    state =
-                        .failed(
-                            "Can't find \(String(describing: (any ConnectivityService).self))"
-                        )
-                    return
-                }
-
+            .task(name: "Connectivity") {
                 Task {
-                    for await state in connectivity {
+
+                    for await state in service.connectivity {
                         self.state = state
                     }
                 }
