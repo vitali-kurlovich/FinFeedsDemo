@@ -10,6 +10,12 @@ nonisolated struct SymbolPrice: Equatable, Codable, Sendable {
     var price: Decimal
 }
 
+extension SymbolPrice: Identifiable {
+    nonisolated var id: String {
+        symbol
+    }
+}
+
 extension SymbolPrice: CustomStringConvertible {
     var description: String {
         "{ symbol:\(symbol), timestamp:\(timestamp), price:\(price) }"
