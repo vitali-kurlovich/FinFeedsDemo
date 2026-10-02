@@ -28,3 +28,7 @@ extension ServicesLocator {
         return SymbolPriceFeedsAdapter(service)
     }()
 }
+
+extension ServicesLocator {
+    static let loggingService: any LoggingService = LoggingServiceAdapter()
+}

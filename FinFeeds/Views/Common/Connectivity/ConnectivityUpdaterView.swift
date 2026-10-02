@@ -4,33 +4,18 @@
 
 import SwiftUI
 
-extension EnvironmentValues {
-    @Entry var connectivityService = ServicesLocator.connectivityService
-}
-
-extension View {
-    func connectivityService(_ service: any ConnectivityService) -> some View {
-        environment(\.connectivityService, service)
-    }
-}
-
 struct ConnectivityUpdaterView: View {
     @State
     private var state: ConnectivityState = .disconnected
 
     @Environment(\.connectivityService)
-    var service
+    private var service
 
     var body: some View {
         ConnectivityView(state: state)
-            .task(name: "Connectivity") {
-                Task {
-
-                    self.state = await service.connectivityLastState
-
-                    for await state in service.connectivity {
-                        self.state = state
-                    }
+            .task {
+                for await state in service.connectivity {
+                    self.state = state
                 }
             }
     }
