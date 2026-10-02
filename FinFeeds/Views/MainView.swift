@@ -14,6 +14,6 @@ struct MainView: View {
             Tab("Logs", systemImage: "tablecells") {
                 LogsView()
             }
-        }
+        }.statusBar()
     }
 }

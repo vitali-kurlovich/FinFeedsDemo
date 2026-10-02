@@ -7,11 +7,17 @@ import TwelveData
 struct TwelveDataConnectivityAdapter: ConnectivityService, Sendable {
     let socket: TwelveDataWebsocket
 
+    var connectivityLastState: ConnectivityState {
+        get async {
+            await ConnectivityState(socket.state)
+        }
+    }
+
     var connectivity: AsyncStream<ConnectivityState> {
         return AsyncStream<ConnectivityState> { continuation in
             let task = Task {
 
-                let stream = await socket.state
+                let stream = await socket.states
 
                 for await state in stream {
                     let state = ConnectivityState(state)

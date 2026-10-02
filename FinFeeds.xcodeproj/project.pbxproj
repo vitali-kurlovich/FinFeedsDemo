@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		544FD8CA306F93AB00432200 /* LoggingBootstrap in Frameworks */ = {isa = PBXBuildFile; productRef = 544FD8C9306F93AB00432200 /* LoggingBootstrap */; };
 		544FD8CC306F93AB00432200 /* LoggingBootstrapUI in Frameworks */ = {isa = PBXBuildFile; productRef = 544FD8CB306F93AB00432200 /* LoggingBootstrapUI */; };
-		54DDDAB6306BEE5400F169D6 /* TwelveData in Frameworks */ = {isa = PBXBuildFile; productRef = 54DDDAB5306BEE5400F169D6 /* TwelveData */; };
+		544FD8D7306F9F4600432200 /* TwelveData in Frameworks */ = {isa = PBXBuildFile; productRef = 544FD8D6306F9F4600432200 /* TwelveData */; };
 		54DDDBB3306D477E00F169D6 /* Caches in Frameworks */ = {isa = PBXBuildFile; productRef = 54DDDBB2306D477E00F169D6 /* Caches */; };
 /* End PBXBuildFile section */
 
@@ -47,8 +47,8 @@
 			files = (
 				544FD8CA306F93AB00432200 /* LoggingBootstrap in Frameworks */,
 				544FD8CC306F93AB00432200 /* LoggingBootstrapUI in Frameworks */,
-				54DDDAB6306BEE5400F169D6 /* TwelveData in Frameworks */,
 				54DDDBB3306D477E00F169D6 /* Caches in Frameworks */,
+				544FD8D7306F9F4600432200 /* TwelveData in Frameworks */,
 			);
 		};
 		54DDDB61306CDA2400F169D6 /* Frameworks */ = {
@@ -103,10 +103,10 @@
 			);
 			name = FinFeeds;
 			packageProductDependencies = (
-				54DDDAB5306BEE5400F169D6 /* TwelveData */,
 				54DDDBB2306D477E00F169D6 /* Caches */,
 				544FD8C9306F93AB00432200 /* LoggingBootstrap */,
 				544FD8CB306F93AB00432200 /* LoggingBootstrapUI */,
+				544FD8D6306F9F4600432200 /* TwelveData */,
 			);
 			productName = MyApp;
 			productReference = 000000000000000000000120 /* FinFeeds.app */;
@@ -162,9 +162,9 @@
 			mainGroup = 000000000000000000000001;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				54DDDAB4306BEE5400F169D6 /* XCRemoteSwiftPackageReference "swift-twelvedata" */,
 				54DDDBB0306D470600F169D6 /* XCRemoteSwiftPackageReference "swift-data-structures" */,
 				544FD8C8306F939A00432200 /* XCRemoteSwiftPackageReference "swift-logging-bootstrap" */,
+				544FD8D5306F9F4600432200 /* XCRemoteSwiftPackageReference "swift-twelvedata" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = 000000000000000000000020 /* Products */;
@@ -532,12 +532,12 @@
 				minimumVersion = 0.1.0;
 			};
 		};
-		54DDDAB4306BEE5400F169D6 /* XCRemoteSwiftPackageReference "swift-twelvedata" */ = {
+		544FD8D5306F9F4600432200 /* XCRemoteSwiftPackageReference "swift-twelvedata" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/vitali-kurlovich/swift-twelvedata";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.1;
+				minimumVersion = 0.1.0;
 			};
 		};
 		54DDDBB0306D470600F169D6 /* XCRemoteSwiftPackageReference "swift-data-structures" */ = {
@@ -561,9 +561,9 @@
 			package = 544FD8C8306F939A00432200 /* XCRemoteSwiftPackageReference "swift-logging-bootstrap" */;
 			productName = LoggingBootstrapUI;
 		};
-		54DDDAB5306BEE5400F169D6 /* TwelveData */ = {
+		544FD8D6306F9F4600432200 /* TwelveData */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 54DDDAB4306BEE5400F169D6 /* XCRemoteSwiftPackageReference "swift-twelvedata" */;
+			package = 544FD8D5306F9F4600432200 /* XCRemoteSwiftPackageReference "swift-twelvedata" */;
 			productName = TwelveData;
 		};
 		54DDDBB2306D477E00F169D6 /* Caches */ = {

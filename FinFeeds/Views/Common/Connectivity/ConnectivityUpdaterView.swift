@@ -26,6 +26,8 @@ struct ConnectivityUpdaterView: View {
             .task(name: "Connectivity") {
                 Task {
 
+                    self.state = await service.connectivityLastState
+
                     for await state in service.connectivity {
                         self.state = state
                     }
