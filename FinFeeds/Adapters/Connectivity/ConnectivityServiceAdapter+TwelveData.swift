@@ -4,17 +4,13 @@
 
 import TwelveData
 
-struct TwelveDataConnectivityAdapter: ConnectivityService, Sendable {
+nonisolated struct TwelveDataConnectivityAdapter: ConnectivityService, Sendable {
     let socket: TwelveDataWebsocket
 
-    var connectivityLastState: ConnectivityState {
-        get async {
-            await ConnectivityState(socket.state)
-        }
-    }
-
     var connectivity: AsyncStream<ConnectivityState> {
-        return AsyncStream<ConnectivityState> { continuation in
+        return AsyncStream<ConnectivityState>(
+            bufferingPolicy: .bufferingNewest(1)
+        ) { continuation in
             let task = Task {
 
                 let stream = await socket.states
@@ -28,6 +24,7 @@ struct TwelveDataConnectivityAdapter: ConnectivityService, Sendable {
 
             continuation.onTermination = { _ in
                 task.cancel()
+                logger.debug("Cancel Connectivity observing")
             }
         }
     }
