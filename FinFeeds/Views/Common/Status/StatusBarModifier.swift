@@ -13,8 +13,8 @@ extension View {
 struct StatusBarModifier: ViewModifier {
     func body(content: Content) -> some View {
         VStack {
-            content.frame(width: .infinity, height: .infinity)
-            StatusView().frame(width: .infinity)
+            content
+            StatusView()
         }.padding()
     }
 }
