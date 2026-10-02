@@ -6,6 +6,14 @@ import SwiftUI
 
 struct MainView: View {
     var body: some View {
-        FeedsView()
+        TabView {
+            Tab("Feeds", systemImage: "bag") {
+                FeedsView()
+            }
+
+            Tab("Logs", systemImage: "tablecells") {
+                LogsView()
+            }
+        }
     }
 }
