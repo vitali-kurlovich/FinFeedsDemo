@@ -30,7 +30,7 @@ extension SymbolPriceFeed {
 
     nonisolated var timestamp: Date? {
         switch self {
-        case let .none(symbol):
+        case .none:
             return nil
 
         case let .cached(price):
