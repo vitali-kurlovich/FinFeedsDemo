@@ -18,6 +18,15 @@ struct PreloadView<Content: View>: View {
     let content: (PreloadState) -> Content
     let preloadTask: () async throws -> Void
 
+    init(
+        @ViewBuilder
+        content: @escaping (PreloadState) -> Content,
+        preloadTask: @escaping () async throws -> Void
+    ) {
+        self.content = content
+        self.preloadTask = preloadTask
+    }
+
     var body: some View {
         content(state)
             .task {
