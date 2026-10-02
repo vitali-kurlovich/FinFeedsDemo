@@ -5,6 +5,5 @@
 nonisolated protocol ConnectivityService: Sendable {
     associatedtype Connectivity: AsyncSequence<ConnectivityState, Never>
 
-    var connectivityLastState: ConnectivityState { get async }
     var connectivity: Connectivity { get }
 }
