@@ -1,0 +1,15 @@
+//
+//  Created by Kurlovich Vitali on 10/3/26.
+//
+
+import SwiftUI
+
+extension EnvironmentValues {
+    @Entry var apiKeyService = ServicesLocator.apiKeyService
+}
+
+extension View {
+    func apiKeyService(_ service: any ApiKeyService) -> some View {
+        environment(\.apiKeyService, service)
+    }
+}
