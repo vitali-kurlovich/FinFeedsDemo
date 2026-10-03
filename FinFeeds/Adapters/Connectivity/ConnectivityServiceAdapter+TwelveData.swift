@@ -24,7 +24,6 @@ nonisolated struct TwelveDataConnectivityAdapter: ConnectivityService, Sendable 
 
             continuation.onTermination = { _ in
                 task.cancel()
-                logger.debug("Cancel Connectivity observing")
             }
         }
     }
