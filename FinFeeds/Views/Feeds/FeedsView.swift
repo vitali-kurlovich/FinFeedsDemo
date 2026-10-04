@@ -6,10 +6,8 @@ import SwiftUI
 
 struct FeedsView: View {
     var body: some View {
-          NavigationStack {
-        SymbolFeedsSubscriptionsView { binding in
-            SymbolFeedsPricesView(binding)
+        NavigationStack {
+            SymbolFeedsPricesView()
         }
-         }
     }
 }

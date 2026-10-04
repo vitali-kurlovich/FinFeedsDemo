@@ -30,12 +30,9 @@ extension ServicesLocator {
     }
 }
 
-
-
 extension ServicesLocator {
     static let loggingService: any LoggingService = LoggingServiceAdapter()
 }
-
 
 extension ServicesLocator {
     static let forexService: any ForexPairsService = TwelveDataForexPairsService(

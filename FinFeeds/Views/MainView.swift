@@ -21,7 +21,7 @@ struct MainView: View {
     @Environment(\.modelContext)
     private var modelContext
 
-    @Environment(\.symbolPriceCoordinator)
+    @Environment(\.swiftDataSymbolPriceCoordinator)
     private var priceRepository
 
     @State
@@ -50,7 +50,7 @@ struct MainView: View {
 
             Tab("Settings", systemImage: "gear", value: .settings) {
                 SettingsView()
-            }.badge(isReady ? nil : Text( "!"))
+            }.badge(isReady ? nil : Text("!"))
         }
         .statusBar()
         .onAppear {
