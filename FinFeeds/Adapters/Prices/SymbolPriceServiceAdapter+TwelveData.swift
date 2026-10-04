@@ -4,12 +4,96 @@
 
 import TwelveData
 
+extension TwelveDataSymbolPriceAdapter: ConnectivityService {
+    var connectivity: AsyncStream<ConnectivityState> {
+        connectivityService.connectivity
+    }
+}
+
 nonisolated struct TwelveDataSymbolPriceAdapter: SymbolPriceService, Sendable {
+    private let repository: TwelveDataSymbolPriceRepository
+    private let connectivityService: TwelveDataConnectivityAdapter
+
+    init(apiKeyService: any ApiKeyService) {
+        let apiKey = apiKeyService.apiKey
+        let websocket = TwelveDataWebsocket(apiKey: apiKey)
+
+        connectivityService = TwelveDataConnectivityAdapter(socket: websocket)
+
+        repository = TwelveDataSymbolPriceRepository(
+            websocket,
+            apiKeyService: apiKeyService
+        )
+    }
+
+    var prices: AsyncStream<SymbolPrice> {
+        return AsyncStream<SymbolPrice>(
+            bufferingPolicy: .bufferingNewest(1)
+        ) { continuation in
+            let task = Task {
+
+                let stream = await repository.prices
+
+                for await price in stream {
+                    continuation.yield(price)
+                }
+                continuation.finish()
+            }
+
+            continuation.onTermination = { _ in
+                task.cancel()
+            }
+        }
+    }
+
+    func subsribe(_ symbols: Set<String>) {
+        Task {
+            await repository.subsribe(symbols)
+        }
+    }
+
+    func unsubsribe(_ symbols: Set<String>) {
+        Task {
+            await repository.unsubsribe(symbols)
+        }
+    }
+}
+
+private actor TwelveDataSymbolPriceRepository {
     private let socket: TwelveDataWebsocket
     private let subscriptionReducer = CountedSetReducer<String>()
 
-    init(_ socket: TwelveDataWebsocket) {
+    private let apiKeyService: any ApiKeyService
+
+    private var updateApiKeyTask: Task<Void, Never>?
+
+    deinit {
+        updateApiKeyTask?.cancel()
+    }
+
+    init(_ socket: TwelveDataWebsocket, apiKeyService: any ApiKeyService) {
         self.socket = socket
+        self.apiKeyService = apiKeyService
+        Task {
+            await invalidateApiKey()
+            await subscribeApiKeyUpdate()
+        }
+    }
+
+    func subscribeApiKeyUpdate() {
+        updateApiKeyTask = Task {
+            for await _ in apiKeyService.updates {
+                await invalidateApiKey()
+            }
+        }
+    }
+
+    func invalidateApiKey() async {
+        let apiKey = apiKeyService.apiKey
+
+        await socket.update(apiKey: apiKey)
+
+        //    socket.configuration.apiKey = apiKeyService.apiKey
     }
 
     var prices: AsyncStream<SymbolPrice> {

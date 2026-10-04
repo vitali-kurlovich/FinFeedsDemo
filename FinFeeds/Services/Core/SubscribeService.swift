@@ -3,7 +3,7 @@
 //
 
 nonisolated protocol SubscribeService: Sendable {
-    associatedtype Key: Hashable
+    associatedtype Key: Hashable & Sendable
 
     func subsribe(_ keys: Set<Key>)
     func unsubsribe(_ keys: Set<Key>)

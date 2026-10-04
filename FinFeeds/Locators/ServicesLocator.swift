@@ -5,30 +5,40 @@
 import TwelveData
 
 struct ServicesLocator {
-    private static let websocket: TwelveDataWebsocket = .init(apiKey: "6cf1d9292bb94c7fab1445e06e6d901e")
-
     private init() {}
 }
 
 extension ServicesLocator {
-    static let connectivityService: any ConnectivityService = TwelveDataConnectivityAdapter(socket: websocket)
+    static let apiKeyService: any ApiKeyService = TwelveDataApiKey()
 }
 
 extension ServicesLocator {
-    static let symbolPriceService: any SymbolPriceService = TwelveDataSymbolPriceAdapter(websocket)
+    private static let twelveDataSymbolPriceService = TwelveDataSymbolPriceAdapter(
+        apiKeyService: apiKeyService
+    )
 }
 
 extension ServicesLocator {
-    static let symbolPriceFeedsService: any SymbolPriceFeedsService = {
-        let service = SymbolPriceFeedCollectorService(
-            service: Self.symbolPriceService,
-            connectivity: Self.connectivityService,
-            cache: CachesLocator.pricesCache
-        )
-        return SymbolPriceFeedsAdapter(service)
-    }()
+    static var symbolPriceService: any SymbolPriceService {
+        twelveDataSymbolPriceService
+    }
 }
+
+extension ServicesLocator {
+    static var connectivityService: any ConnectivityService {
+        twelveDataSymbolPriceService
+    }
+}
+
+
 
 extension ServicesLocator {
     static let loggingService: any LoggingService = LoggingServiceAdapter()
+}
+
+
+extension ServicesLocator {
+    static let forexService: any ForexPairsService = TwelveDataForexPairsService(
+        apiKeyService: apiKeyService
+    )
 }
