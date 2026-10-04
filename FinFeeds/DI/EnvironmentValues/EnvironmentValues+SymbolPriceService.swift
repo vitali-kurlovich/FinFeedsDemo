@@ -4,7 +4,6 @@
 
 import SwiftUI
 
-
 extension EnvironmentValues {
     @Entry var symbolPriceService = ServicesLocator.symbolPriceService
 }
