@@ -10,7 +10,7 @@ struct LoggingServiceAdapter: LoggingService {
         #if DEBUG
             LoggingBootstrap.default.loggingEvents(level: .debug)
         #else
-            LoggingBootstrap.default.events
+            LoggingBootstrap.default.loggingEvents
         #endif
     }
 }
