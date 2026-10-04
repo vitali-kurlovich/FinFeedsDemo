@@ -15,6 +15,8 @@ struct StatusBarModifier: ViewModifier {
         VStack {
             content
             StatusView()
-        }.padding()
+                .padding()
+
+        }.ignoresSafeArea(edges: .bottom)
     }
 }
