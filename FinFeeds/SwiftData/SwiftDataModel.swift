@@ -1,5 +1,5 @@
 //
-//  FeedsSubscriptions.swift
+//  SwiftDataModel.swift
 //  FinFeeds
 //
 //  Created by Kurlovich Vitali on 10/3/26.
@@ -14,7 +14,27 @@ enum PersistentModels {
             FeedsSubscriptions.self,
             Price.self,
             Feed.self,
+            ForexPairModel.self,
+            ForexPairsStorage.self,
         ]
+    }
+}
+
+@Model
+final class ForexPairModel {
+    var symbol: String
+
+    init(symbol: String) {
+        self.symbol = symbol
+    }
+}
+
+@Model
+final class ForexPairsStorage {
+    var pairs: [ForexPairModel]
+
+    init(pairs: [ForexPairModel]) {
+        self.pairs = pairs
     }
 }
 
