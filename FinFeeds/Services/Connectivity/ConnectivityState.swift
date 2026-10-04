@@ -2,7 +2,7 @@
 //  Created by Kurlovich Vitali on 9/29/26.
 //
 
-nonisolated enum ConnectivityState: Equatable, Sendable {
+public nonisolated enum ConnectivityState: Equatable, Sendable {
     case disconnected
     case connecting
     case connected
@@ -11,7 +11,7 @@ nonisolated enum ConnectivityState: Equatable, Sendable {
 }
 
 extension ConnectivityState: CustomStringConvertible {
-    var description: String {
+    public var description: String {
         switch self {
         case .connected:
             "connected"

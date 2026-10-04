@@ -2,22 +2,22 @@
 //  Created by Kurlovich Vitali on 10/3/26.
 //
 
-nonisolated struct Symbol: Hashable, Identifiable, Sendable, CustomStringConvertible, Comparable {
-    let rawValue: String
+public nonisolated struct Symbol: Hashable, Identifiable, Sendable, CustomStringConvertible, Comparable {
+    public let rawValue: String
 
-    init(_ rawValue: String) {
+    public init(_ rawValue: String) {
         self.rawValue = rawValue
     }
 
-    var id: String {
+    public var id: String {
         rawValue
     }
 
-    var description: String {
+    public var description: String {
         rawValue
     }
 
-    static func < (lhs: borrowing Symbol, rhs: borrowing Symbol) -> Bool {
+    public static func < (lhs: borrowing Symbol, rhs: borrowing Symbol) -> Bool {
         lhs.rawValue < rhs.rawValue
     }
 }

@@ -2,7 +2,7 @@
 //  Created by Kurlovich Vitali on 10/3/26.
 //
 
-nonisolated protocol ApiKeyService: Sendable {
+public nonisolated protocol ApiKeyService: Sendable {
     var apiKey: String { get }
 
     func update(apiKey: String)
@@ -11,7 +11,7 @@ nonisolated protocol ApiKeyService: Sendable {
     var updates: any AsyncSequence<Void, Never> { get }
 }
 
-extension ApiKeyService {
+public extension ApiKeyService {
     nonisolated var isReady: Bool {
         apiKey.isEmpty == false
     }

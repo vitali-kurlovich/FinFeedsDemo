@@ -4,7 +4,7 @@
 
 import Logging
 
-nonisolated protocol LoggingService: Sendable {
+public nonisolated protocol LoggingService: Sendable {
     associatedtype LogEventsStream: AsyncSequence<LogEvent, Never>
 
     var logEvents: LogEventsStream { get }

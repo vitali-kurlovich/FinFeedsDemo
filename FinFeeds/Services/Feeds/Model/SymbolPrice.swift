@@ -4,20 +4,20 @@
 
 import Foundation
 
-nonisolated struct SymbolPrice: Equatable, Codable, Sendable {
-    var symbol: String
-    var timestamp: Date
-    var price: Decimal
+public nonisolated struct SymbolPrice: Equatable, Codable, Sendable {
+    public var symbol: String
+    public var timestamp: Date
+    public var price: Decimal
 }
 
 extension SymbolPrice: Identifiable {
-    nonisolated var id: String {
+    public nonisolated var id: String {
         symbol
     }
 }
 
 extension SymbolPrice: CustomStringConvertible {
-    var description: String {
+    public var description: String {
         "{ symbol:\(symbol), timestamp:\(timestamp), price:\(price) }"
     }
 }
