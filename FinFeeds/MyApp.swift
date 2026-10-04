@@ -1,5 +1,6 @@
 import Logging
 import LoggingBootstrap
+import SwiftData
 import SwiftUI
 
 @main struct MyApp: App {
@@ -14,6 +15,6 @@ import SwiftUI
     var body: some Scene {
         WindowGroup {
             MainView()
-        }
+        }.modelContainer(for: PersistentModels.persistentModels)
     }
 }

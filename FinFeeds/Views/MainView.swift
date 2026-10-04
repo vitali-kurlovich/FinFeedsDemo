@@ -2,6 +2,7 @@
 //  Created by Kurlovich Vitali on 10/2/26.
 //
 
+import SwiftData
 import SwiftUI
 
 enum AppTab: Hashable {
@@ -12,21 +13,36 @@ enum AppTab: Hashable {
 
 struct MainView: View {
     @Environment(\.apiKeyService)
-    var apiKeyService
+    private var apiKeyService
+
+    @Environment(\.symbolPriceService)
+    private var symbolPriceService
+
+    @Environment(\.modelContext)
+    private var modelContext
+
+    @Environment(\.symbolPriceCoordinator)
+    private var priceRepository
 
     @State
-    var isReady: Bool = false
+    private var isReady: Bool = false
 
     @State
     private var selectedTab: AppTab = .feeds
 
     var body: some View {
         TabView(selection: $selectedTab) {
-            if isReady {
+            #if os(macOS)
+                if isReady {
+                    Tab("Feeds", systemImage: "bag", value: .feeds) {
+                        FeedsView()
+                    }
+                }
+            #else
                 Tab("Feeds", systemImage: "bag", value: .feeds) {
                     FeedsView()
-                }
-            }
+                }.disabled(isReady == false)
+            #endif
 
             Tab("Logs", systemImage: "tablecells", value: .logs) {
                 LogsView()
@@ -34,9 +50,17 @@ struct MainView: View {
 
             Tab("Settings", systemImage: "gear", value: .settings) {
                 SettingsView()
-            }.badge(isReady ? "" : "!")
+            }.badge(isReady ? nil : Text( "!"))
         }
         .statusBar()
+        .onAppear {
+            priceRepository
+                .start(service: symbolPriceService, context: modelContext)
+        }
+        .onDisappear {
+            priceRepository.stop()
+        }
+
         .task {
             self.isReady = apiKeyService.isReady
 
@@ -50,3 +74,5 @@ struct MainView: View {
         }
     }
 }
+
+// SwiftDataymbolPriceRepository(context: modelContext, service: symbolPriceService)

@@ -7,10 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		544FD8D7306F9F4600432200 /* TwelveData in Frameworks */ = {isa = PBXBuildFile; productRef = 544FD8D6306F9F4600432200 /* TwelveData */; };
-		544FD8F4306FB58C00432200 /* LoggingBootstrap in Frameworks */ = {isa = PBXBuildFile; productRef = 544FD8F3306FB58C00432200 /* LoggingBootstrap */; };
-		544FD8F6306FB58C00432200 /* LoggingBootstrapUI in Frameworks */ = {isa = PBXBuildFile; productRef = 544FD8F5306FB58C00432200 /* LoggingBootstrapUI */; };
-		54DDDBB3306D477E00F169D6 /* Caches in Frameworks */ = {isa = PBXBuildFile; productRef = 54DDDBB2306D477E00F169D6 /* Caches */; };
+		544FDC3C3070E0A100432200 /* TwelveData in Frameworks */ = {isa = PBXBuildFile; productRef = 544FDC3B3070E0A100432200 /* TwelveData */; };
+		544FDC3F3070E0B400432200 /* LoggingBootstrap in Frameworks */ = {isa = PBXBuildFile; productRef = 544FDC3E3070E0B400432200 /* LoggingBootstrap */; };
+		544FDC413070E0B400432200 /* LoggingBootstrapUI in Frameworks */ = {isa = PBXBuildFile; productRef = 544FDC403070E0B400432200 /* LoggingBootstrapUI */; };
+		544FDC443070E0C500432200 /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 544FDC433070E0C500432200 /* AsyncAlgorithms */; };
+		544FDC463070E0C500432200 /* AsyncStreaming in Frameworks */ = {isa = PBXBuildFile; productRef = 544FDC453070E0C500432200 /* AsyncStreaming */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,10 +46,11 @@
 		000000000000000130000000 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
-				544FD8F4306FB58C00432200 /* LoggingBootstrap in Frameworks */,
-				544FD8F6306FB58C00432200 /* LoggingBootstrapUI in Frameworks */,
-				54DDDBB3306D477E00F169D6 /* Caches in Frameworks */,
-				544FD8D7306F9F4600432200 /* TwelveData in Frameworks */,
+				544FDC463070E0C500432200 /* AsyncStreaming in Frameworks */,
+				544FDC3C3070E0A100432200 /* TwelveData in Frameworks */,
+				544FDC3F3070E0B400432200 /* LoggingBootstrap in Frameworks */,
+				544FDC413070E0B400432200 /* LoggingBootstrapUI in Frameworks */,
+				544FDC443070E0C500432200 /* AsyncAlgorithms in Frameworks */,
 			);
 		};
 		54DDDB61306CDA2400F169D6 /* Frameworks */ = {
@@ -103,10 +105,11 @@
 			);
 			name = FinFeeds;
 			packageProductDependencies = (
-				54DDDBB2306D477E00F169D6 /* Caches */,
-				544FD8D6306F9F4600432200 /* TwelveData */,
-				544FD8F3306FB58C00432200 /* LoggingBootstrap */,
-				544FD8F5306FB58C00432200 /* LoggingBootstrapUI */,
+				544FDC3B3070E0A100432200 /* TwelveData */,
+				544FDC3E3070E0B400432200 /* LoggingBootstrap */,
+				544FDC403070E0B400432200 /* LoggingBootstrapUI */,
+				544FDC433070E0C500432200 /* AsyncAlgorithms */,
+				544FDC453070E0C500432200 /* AsyncStreaming */,
 			);
 			productName = MyApp;
 			productReference = 000000000000000000000120 /* FinFeeds.app */;
@@ -162,9 +165,9 @@
 			mainGroup = 000000000000000000000001;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				54DDDBB0306D470600F169D6 /* XCRemoteSwiftPackageReference "swift-data-structures" */,
-				544FD8D5306F9F4600432200 /* XCRemoteSwiftPackageReference "swift-twelvedata" */,
-				544FD8F2306FB58C00432200 /* XCRemoteSwiftPackageReference "swift-logging-bootstrap" */,
+				544FDC3A3070E0A100432200 /* XCRemoteSwiftPackageReference "swift-twelvedata" */,
+				544FDC3D3070E0B400432200 /* XCRemoteSwiftPackageReference "swift-logging-bootstrap" */,
+				544FDC423070E0C500432200 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = 000000000000000000000020 /* Products */;
@@ -524,52 +527,57 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		544FD8D5306F9F4600432200 /* XCRemoteSwiftPackageReference "swift-twelvedata" */ = {
+		544FDC3A3070E0A100432200 /* XCRemoteSwiftPackageReference "swift-twelvedata" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/vitali-kurlovich/swift-twelvedata";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.0;
+				minimumVersion = 0.1.5;
 			};
 		};
-		544FD8F2306FB58C00432200 /* XCRemoteSwiftPackageReference "swift-logging-bootstrap" */ = {
+		544FDC3D3070E0B400432200 /* XCRemoteSwiftPackageReference "swift-logging-bootstrap" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/vitali-kurlovich/swift-logging-bootstrap/";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.2.0;
+				minimumVersion = 0.2.2;
 			};
 		};
-		54DDDBB0306D470600F169D6 /* XCRemoteSwiftPackageReference "swift-data-structures" */ = {
+		544FDC423070E0C500432200 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/vitali-kurlovich/swift-data-structures";
+			repositoryURL = "https://github.com/apple/swift-async-algorithms/";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 0.2.0;
+				minimumVersion = 1.1.7;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		544FD8D6306F9F4600432200 /* TwelveData */ = {
+		544FDC3B3070E0A100432200 /* TwelveData */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 544FD8D5306F9F4600432200 /* XCRemoteSwiftPackageReference "swift-twelvedata" */;
+			package = 544FDC3A3070E0A100432200 /* XCRemoteSwiftPackageReference "swift-twelvedata" */;
 			productName = TwelveData;
 		};
-		544FD8F3306FB58C00432200 /* LoggingBootstrap */ = {
+		544FDC3E3070E0B400432200 /* LoggingBootstrap */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 544FD8F2306FB58C00432200 /* XCRemoteSwiftPackageReference "swift-logging-bootstrap" */;
+			package = 544FDC3D3070E0B400432200 /* XCRemoteSwiftPackageReference "swift-logging-bootstrap" */;
 			productName = LoggingBootstrap;
 		};
-		544FD8F5306FB58C00432200 /* LoggingBootstrapUI */ = {
+		544FDC403070E0B400432200 /* LoggingBootstrapUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 544FD8F2306FB58C00432200 /* XCRemoteSwiftPackageReference "swift-logging-bootstrap" */;
+			package = 544FDC3D3070E0B400432200 /* XCRemoteSwiftPackageReference "swift-logging-bootstrap" */;
 			productName = LoggingBootstrapUI;
 		};
-		54DDDBB2306D477E00F169D6 /* Caches */ = {
+		544FDC433070E0C500432200 /* AsyncAlgorithms */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 54DDDBB0306D470600F169D6 /* XCRemoteSwiftPackageReference "swift-data-structures" */;
-			productName = Caches;
+			package = 544FDC423070E0C500432200 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */;
+			productName = AsyncAlgorithms;
+		};
+		544FDC453070E0C500432200 /* AsyncStreaming */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 544FDC423070E0C500432200 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */;
+			productName = AsyncStreaming;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -9,14 +9,13 @@ struct SettingsEditView: View {
     var model: SettingsModel
 
     var body: some View {
-        VStack(alignment: .trailing) {
+        Form {
             TextField("API Key", text: $model.apiKey)
 
             Button("Save") {
                 model.save()
             }.disabled(!model.isApiKeyChanged)
-        }.padding()
-            .disabled(!model.isReady)
+        }.disabled(!model.isReady)
     }
 }
 
