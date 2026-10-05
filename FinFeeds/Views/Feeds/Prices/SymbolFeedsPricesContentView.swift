@@ -38,20 +38,6 @@ struct SymbolFeedsPricesContentView: View {
                 } label: {
                     Label("Remove", systemImage: "trash")
                 }.disabled(selectedItems.isEmpty)
-                SymbolMenu(disabled: subscriptions) { symbol in
-                    _ = withAnimation {
-                        subscriptions.insert(symbol)
-                    }
-                }
-            }
-            .toolbar {
-                ToolbarItem {
-                    SymbolMenu(disabled: subscriptions) { symbol in
-                        _ = withAnimation {
-                            subscriptions.insert(symbol)
-                        }
-                    }
-                }
             }
         #if os(macOS)
             .onDeleteCommand {
@@ -68,79 +54,6 @@ struct SymbolFeedsPricesContentView: View {
         withAnimation {
             let remove = subscriptions.filter { selectedItems.contains($0) }
             subscriptions = subscriptions.subtracting(remove)
-        }
-    }
-}
-
-struct SymbolFeedsPricesSearchContentView: View {
-    @Environment(\.modelContext)
-    private var modelContext
-
-    @Environment(\.forexService)
-    var forexService
-
-    @Environment(\.swiftDataForexPairsSyncCoordinator)
-    var coordinator
-
-    @Query
-    private var dataModel: [ForexPairsStorage]
-
-    @Binding
-    private var subscriptions: Set<String>
-
-    @State
-    private var selectedItems = Set<Symbol.ID>()
-
-    @Binding
-    private var searchText: String
-
-    private var searchPredicate: Predicate<ForexPairModel> {
-        let uppercased = searchText.uppercased()
-        return #Predicate<ForexPairModel> {
-            $0.symbol.starts(with: uppercased)
-        }
-    }
-
-    init(
-        _ subscriptions: Binding<Set<String>>,
-        searchText: Binding<String>
-    ) {
-        _subscriptions = subscriptions
-        _searchText = searchText
-    }
-
-    var body: some View {
-        SymbolFeedPricesListView(symbols: orderedSubscriptions, selectedItems: $selectedItems)
-            .task {
-                do {
-                    try await coordinator
-                        .sync(context: modelContext, service: forexService)
-                } catch {
-                    // TODO: Logging errors
-                }
-            }
-    }
-
-    var orderedSubscriptions: [Symbol] {
-        if searchText.isEmpty {
-            return dataModel.first?.pairs
-                .sorted(by: \.symbol)
-                .map {
-                    Symbol($0.symbol)
-                } ?? []
-        }
-
-        do {
-            return try dataModel.first?.pairs
-                .filter(searchPredicate)
-                .sorted(by: \.symbol)
-                .map {
-                    Symbol($0.symbol)
-                } ?? []
-
-        } catch {
-            // TODO: Logging error
-            return []
         }
     }
 }

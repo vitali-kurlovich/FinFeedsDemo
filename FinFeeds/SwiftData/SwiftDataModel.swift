@@ -14,27 +14,36 @@ enum PersistentModels {
             FeedsSubscriptions.self,
             Price.self,
             Feed.self,
-            ForexPairModel.self,
-            ForexPairsStorage.self,
+            SymbolsStorage.self,
         ]
     }
 }
 
-@Model
-final class ForexPairModel {
-    var symbol: String
-
-    init(symbol: String) {
-        self.symbol = symbol
-    }
+enum SymbolType: String, Codable {
+    case forex
+    case crypto
 }
 
 @Model
-final class ForexPairsStorage {
-    var pairs: [ForexPairModel]
+final class SymbolsStorage {
+    var typeRaw: String
 
-    init(pairs: [ForexPairModel]) {
-        self.pairs = pairs
+    var type: SymbolType {
+        get {
+            SymbolType(rawValue: typeRaw) ?? .forex
+        }
+        set {
+            typeRaw = newValue.rawValue
+        }
+    }
+
+    var symbols: Set<String>
+    var lastUpdate: Date
+
+    init(type: SymbolType, symbols: Set<String>, lastUpdate: Date) {
+        typeRaw = type.rawValue
+        self.symbols = symbols
+        self.lastUpdate = lastUpdate
     }
 }
 

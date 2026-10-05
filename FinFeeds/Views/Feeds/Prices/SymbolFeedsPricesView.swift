@@ -35,14 +35,12 @@ struct SymbolFeedsPricesView: View {
 
     var body: some View {
         SymbolFeedsPricesContentView(subscriptionsBinding)
-
             .overlay {
-                if isSearchPresented {
-                    SymbolFeedsPricesSearchContentView(
-                        subscriptionsBinding,
-                        searchText: $searchText
-                    )
-                }
+                SymbolFeedsPricesSearchContentView(
+                    subscriptionsBinding,
+                    searchText: $searchText,
+                    isPresented: $isSearchPresented
+                )
             }
             .searchable(text: $searchText, isPresented: $isSearchPresented)
     }

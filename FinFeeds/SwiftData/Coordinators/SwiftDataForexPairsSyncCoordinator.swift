@@ -12,19 +12,32 @@ extension EnvironmentValues {
 
 nonisolated struct SwiftDataForexPairsSyncCoordinator: Sendable {
     func sync(context: ModelContext, service: any ForexPairsService) async throws {
-        let liveData = try await service.forexPairs()
+        let forexTypeRaw = SymbolType.forex.rawValue
 
-        var descriptor = FetchDescriptor<ForexPairsStorage>()
-        descriptor.fetchLimit = 1
-
-        let pairs = liveData.map { pair in
-            ForexPairModel(symbol: pair.symbol.id)
+        let predicate = #Predicate<SymbolsStorage> {
+            $0.typeRaw == forexTypeRaw
         }
 
-        if let storage = try context.fetch(descriptor).first {
-            storage.pairs = pairs
+        var descriptor = FetchDescriptor<SymbolsStorage>(predicate: predicate)
+        descriptor.fetchLimit = 1
+
+        let storage = try context.fetch(descriptor).first
+
+        if let storage, storage.lastUpdate.addingTimeInterval(24 * 60 * 60) > .now {
+            return
+        }
+
+        let liveData = try await service.forexPairs()
+
+        let symbols = Set(liveData.map {
+            $0.symbol.id
+        })
+
+        if let storage {
+            storage.symbols = symbols
+            storage.lastUpdate = .now
         } else {
-            let storage = ForexPairsStorage(pairs: pairs)
+            let storage = SymbolsStorage(type: .forex, symbols: symbols, lastUpdate: .now)
             context.insert(storage)
         }
 
