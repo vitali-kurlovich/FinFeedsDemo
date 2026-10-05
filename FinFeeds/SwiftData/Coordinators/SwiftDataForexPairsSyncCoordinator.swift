@@ -7,16 +7,9 @@ import SwiftData
 
 nonisolated struct SwiftDataForexPairsSyncCoordinator: Sendable {
     func sync(context: ModelContext, service: any ForexPairsService) async throws {
-        let forexTypeRaw = SymbolType.forex.rawValue
+        let resolver = SwiftDataStorageResolver()
 
-        let predicate = #Predicate<SymbolsStorage> {
-            $0.typeRaw == forexTypeRaw
-        }
-
-        var descriptor = FetchDescriptor<SymbolsStorage>(predicate: predicate)
-        descriptor.fetchLimit = 1
-
-        let storage = try context.fetch(descriptor).first
+        let storage = try resolver.storage(context: context, for: .forex)
 
         if let storage, storage.lastUpdate.addingTimeInterval(24 * 60 * 60) > .now {
             return
@@ -28,14 +21,6 @@ nonisolated struct SwiftDataForexPairsSyncCoordinator: Sendable {
             $0.symbol.id
         })
 
-        if let storage {
-            storage.symbols = symbols
-            storage.lastUpdate = .now
-        } else {
-            let storage = SymbolsStorage(type: .forex, symbols: symbols, lastUpdate: .now)
-            context.insert(storage)
-        }
-
-        try context.save()
+        try resolver.save(context: context, symbols: symbols, for: .forex)
     }
 }
