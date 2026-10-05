@@ -8,6 +8,8 @@ struct TwelveDataStocksService: StocksService {
     let apiKeyService: any ApiKeyService
 
     func stocks() async throws(RestError) -> [StockInstrument] {
+        return ["AAPL", "RY:TSX", "TSLA"].map { StockInstrument(symbol: Symbol($0)) }
+
         do {
             let rest = TwelveDataREST(apiKey: apiKeyService.apiKey)
 
