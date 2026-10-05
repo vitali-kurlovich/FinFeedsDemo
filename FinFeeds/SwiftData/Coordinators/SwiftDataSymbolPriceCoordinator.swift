@@ -32,22 +32,22 @@ final class SwiftDataSymbolPriceCoordinator {
             descriptor.fetchLimit = 1
 
             if let feed = try context.fetch(descriptor).first {
-                if let price = feed.price {
-                    price.price = symbolPrice.price
-                    price.timestamp = symbolPrice.timestamp
-                } else {
-                    feed.price = Price(price: symbolPrice.price, timestamp: symbolPrice.timestamp)
-                }
+                feed.price = symbolPrice.price
+                feed.timestamp = symbolPrice.timestamp
 
             } else {
-                let price = Price(price: symbolPrice.price, timestamp: symbolPrice.timestamp)
-
-                let feed = Feed(symbol: symbolPrice.symbol, price: price)
+                let feed = Feed(
+                    symbol: symbolPrice.symbol,
+                    price: symbolPrice.price,
+                    timestamp: symbolPrice.timestamp
+                )
 
                 context.insert(feed)
             }
 
             try context.save()
+            // TODO: Logging
+            print("Save feed update")
         }
 
         recieveTask = Task { [service, context] in

@@ -5,7 +5,6 @@
 import Foundation
 import SwiftData
 
-
 nonisolated struct SwiftDataCommoditiesSyncCoordinator: Sendable {
     func sync(context: ModelContext, service: any CommoditiesPairsService) async throws {
         let resolver = SwiftDataSymbolsStorageSyncResolver()

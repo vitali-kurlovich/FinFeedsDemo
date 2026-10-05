@@ -9,7 +9,6 @@ enum PersistentModels {
     static var persistentModels: [any PersistentModel.Type] {
         [
             FeedsSubscriptions.self,
-            Price.self,
             Feed.self,
             SymbolsStorage.self,
         ]
@@ -59,25 +58,16 @@ final class FeedsSubscriptions {
 }
 
 @Model
-final class Price {
-    // var symbol: String
-    var price: Decimal
-    var timestamp: Date
-
-    init(price: Decimal, timestamp: Date) {
-        self.price = price
-        self.timestamp = timestamp
-    }
-}
-
-@Model
 final class Feed {
     @Attribute(.unique)
     var symbol: String
-    var price: Price?
 
-    init(symbol: String, price: Price? = nil) {
+    var price: Decimal?
+    var timestamp: Date?
+
+    init(symbol: String, price: Decimal? = nil, timestamp: Date? = nil) {
         self.symbol = symbol
         self.price = price
+        self.timestamp = timestamp
     }
 }
