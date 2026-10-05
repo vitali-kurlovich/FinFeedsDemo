@@ -8,11 +8,8 @@ extension EnvironmentValues {
     @Entry var stockService = ServicesLocator.stockService
 }
 
-
-
 extension View {
     func cryptoService(_ service: any StocksService) -> some View {
         environment(\.stockService, service)
     }
 }
-
