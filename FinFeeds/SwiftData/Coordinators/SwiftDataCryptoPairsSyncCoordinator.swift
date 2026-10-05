@@ -7,20 +7,15 @@ import SwiftData
 
 nonisolated struct SwiftDataCryptoPairsSyncCoordinator: Sendable {
     func sync(context: ModelContext, service: any CryptoPairsService) async throws {
-        let resolver = SwiftDataStorageResolver()
+        let resolver = SwiftDataSymbolsStorageSyncResolver()
 
-        let storage = try resolver.storage(context: context, for: .crypto)
+        try await resolver
+            .sync(context: context, for: .crypto, skipSyncInterval: TimeInterval(24 * 60 * 60)) {
+                let liveData = try await service.cryptoPairs()
 
-        if let storage, storage.lastUpdate.addingTimeInterval(24 * 60 * 60) > .now {
-            return
-        }
-
-        let liveData = try await service.cryptoPairs()
-
-        let symbols = Set(liveData.map {
-            $0.symbol.id
-        })
-
-        try resolver.save(context: context, symbols: symbols, for: .crypto)
+                return Set(liveData.map {
+                    $0.symbol.id
+                })
+            }
     }
 }

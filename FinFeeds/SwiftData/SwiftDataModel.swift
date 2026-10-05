@@ -22,6 +22,7 @@ enum PersistentModels {
 enum SymbolType: String, Codable {
     case forex
     case crypto
+    case stock
 }
 
 @Model

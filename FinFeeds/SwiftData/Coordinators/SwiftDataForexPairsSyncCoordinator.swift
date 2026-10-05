@@ -7,20 +7,15 @@ import SwiftData
 
 nonisolated struct SwiftDataForexPairsSyncCoordinator: Sendable {
     func sync(context: ModelContext, service: any ForexPairsService) async throws {
-        let resolver = SwiftDataStorageResolver()
+        let resolver = SwiftDataSymbolsStorageSyncResolver()
 
-        let storage = try resolver.storage(context: context, for: .forex)
+        try await resolver
+            .sync(context: context, for: .forex, skipSyncInterval: TimeInterval(24 * 60 * 60)) {
+                let liveData = try await service.forexPairs()
 
-        if let storage, storage.lastUpdate.addingTimeInterval(24 * 60 * 60) > .now {
-            return
-        }
-
-        let liveData = try await service.forexPairs()
-
-        let symbols = Set(liveData.map {
-            $0.symbol.id
-        })
-
-        try resolver.save(context: context, symbols: symbols, for: .forex)
+                return Set(liveData.map {
+                    $0.symbol.id
+                })
+            }
     }
 }

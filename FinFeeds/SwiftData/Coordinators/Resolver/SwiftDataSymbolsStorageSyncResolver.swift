@@ -5,9 +5,9 @@
 import Foundation
 import SwiftData
 
-nonisolated struct SwiftDataStorageResolver {}
+nonisolated struct SwiftDataSymbolsStorageSyncResolver {}
 
-extension SwiftDataStorageResolver {
+extension SwiftDataSymbolsStorageSyncResolver {
     nonisolated func storage(context: ModelContext, for type: SymbolType) throws -> SymbolsStorage? {
         let typeRaw = type.rawValue
 
@@ -31,5 +31,23 @@ extension SwiftDataStorageResolver {
         }
 
         try context.save()
+    }
+}
+
+extension SwiftDataSymbolsStorageSyncResolver {
+    nonisolated func sync(context: ModelContext,
+                          for type: SymbolType,
+                          skipSyncInterval: TimeInterval = 0,
+                          fetch: () async throws -> Set<String>) async throws
+    {
+        let storage = try storage(context: context, for: type)
+
+        if skipSyncInterval > 0, let storage, storage.lastUpdate.addingTimeInterval(skipSyncInterval) > .now {
+            return
+        }
+
+        let symbols = try await fetch()
+
+        try save(context: context, symbols: symbols, for: type)
     }
 }
