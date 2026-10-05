@@ -2,8 +2,6 @@
 //  Created by Kurlovich Vitali on 9/29/26.
 //
 
-import TwelveData
-
 struct ServicesLocator {
     private init() {}
 }

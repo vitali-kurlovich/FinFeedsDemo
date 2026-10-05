@@ -12,9 +12,6 @@ struct SymbolFeedsPricesSearchContentView: View {
     @Environment(\.forexService)
     var forexService
 
-    @Environment(\.swiftDataForexPairsSyncCoordinator)
-    var coordinator
-
     @Query
     private var dataModel: [SymbolsStorage]
 
@@ -76,6 +73,8 @@ struct SymbolFeedsPricesSearchContentView: View {
                     guard isSync == false else { return }
 
                     do {
+                        let coordinator = SwiftDataForexPairsSyncCoordinator()
+
                         try await coordinator
                             .sync(context: modelContext, service: forexService)
                         isSync = true
@@ -107,8 +106,8 @@ struct SymbolFeedsPricesSearchContentView: View {
 
         return storage.symbols
             .filter {
-            $0.localizedCaseInsensitiveContains(searchText)
-        }.sorted()
+                $0.localizedCaseInsensitiveContains(searchText)
+            }.sorted()
             .map {
                 Symbol($0)
             }

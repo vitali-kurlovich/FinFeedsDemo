@@ -38,6 +38,7 @@ final class SymbolsStorage {
     }
 
     var symbols: Set<String>
+    var lastLoadedPage: Int?
     var lastUpdate: Date
 
     init(type: SymbolType, symbols: Set<String>, lastUpdate: Date) {

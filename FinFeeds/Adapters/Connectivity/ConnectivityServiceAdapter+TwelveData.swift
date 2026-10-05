@@ -2,7 +2,7 @@
 //  Created by Kurlovich Vitali on 9/29/26.
 //
 
-import TwelveData
+import TwelveDataStream
 
 nonisolated struct TwelveDataConnectivityAdapter: ConnectivityService, Sendable {
     let socket: TwelveDataWebsocket

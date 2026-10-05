@@ -2,7 +2,7 @@
 //  Created by Kurlovich Vitali on 9/29/26.
 //
 
-import TwelveData
+import TwelveDataStream
 
 extension TwelveDataSymbolPriceAdapter: ConnectivityService {
     var connectivity: AsyncStream<ConnectivityState> {

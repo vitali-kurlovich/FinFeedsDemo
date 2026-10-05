@@ -4,11 +4,6 @@
 
 import Foundation
 import SwiftData
-import SwiftUI
-
-extension EnvironmentValues {
-    @Entry var swiftDataForexPairsSyncCoordinator = SwiftDataForexPairsSyncCoordinator()
-}
 
 nonisolated struct SwiftDataForexPairsSyncCoordinator: Sendable {
     func sync(context: ModelContext, service: any ForexPairsService) async throws {

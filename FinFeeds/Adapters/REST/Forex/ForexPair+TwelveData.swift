@@ -2,7 +2,7 @@
 //  Created by Kurlovich Vitali on 10/4/26.
 //
 
-import TwelveData
+import TwelveDataREST
 
 extension ForexPair {
     nonisolated init(_ pair: TwelveDataForexPair) {
