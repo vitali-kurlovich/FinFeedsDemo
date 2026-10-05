@@ -7,21 +7,17 @@ import SwiftData
 import SwiftUI
 
 struct SymbolFeedsPricesContentView: View {
-    @Environment(\.symbolPriceService)
-    private var service
-
     @Environment(\.modelContext)
     private var modelContext
-
-    @Query(filter: #Predicate<FeedsSubscriptions> {
-        $0.name == "feeds"
-    }) private var dataModel: [FeedsSubscriptions]
 
     @Binding
     private var subscriptions: Set<String>
 
     @State
-    private var selectedItems = Set<Symbol.ID>()
+    private var selectedItems = Set<FeedsUpdate.ID>()
+
+    @State
+    var feedsUpdates = SwiftDataFeedsObserver()
 
     init(
         _ subscriptions: Binding<Set<String>>
@@ -31,29 +27,40 @@ struct SymbolFeedsPricesContentView: View {
     }
 
     var body: some View {
-        SymbolFeedPricesListView(symbols: orderedSubscriptions, selectedItems: $selectedItems)
-            .contextMenu {
-                Button(role: .destructive) {
-                    removeSelected()
-                } label: {
-                    Label("Remove", systemImage: "trash")
-                }.disabled(selectedItems.isEmpty)
-            }
-        #if os(macOS)
-            .onDeleteCommand {
+        SymbolFeedPricesListView(
+            updates: feedsUpdates.updates,
+            selectedItems: $selectedItems
+        )
+        .contextMenu {
+            Button(role: .destructive) {
                 removeSelected()
+            } label: {
+                Label("Remove", systemImage: "trash")
+            }.disabled(selectedItems.isEmpty)
+        }
+        .onChange(of: subscriptions) {
+            feedsUpdates.subscribed = subscriptions
+        }
+        .onAppear {
+            do {
+                try feedsUpdates.start(context: modelContext, subscribed: subscriptions)
+            } catch {
+                // TODO: Logging error
             }
+        }.onDisappear {
+            feedsUpdates.stop()
+        }
+        #if os(macOS)
+        .onDeleteCommand {
+            removeSelected()
+        }
         #endif
-    }
-
-    var orderedSubscriptions: [Symbol] {
-        subscriptions.sorted().map { Symbol($0) }
     }
 
     func removeSelected() {
         withAnimation {
-            let remove = subscriptions.filter { selectedItems.contains($0) }
-            subscriptions = subscriptions.subtracting(remove)
+            let removedSymbols = selectedItems.map { $0.id }
+            subscriptions = subscriptions.subtracting(removedSymbols)
         }
     }
 }

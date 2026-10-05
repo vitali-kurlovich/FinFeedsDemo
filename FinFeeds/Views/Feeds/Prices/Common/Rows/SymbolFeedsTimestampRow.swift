@@ -5,33 +5,18 @@
 import SwiftData
 import SwiftUI
 
-struct SymbolFeedsTimestampRow: View {
-    let symbol: Symbol
+struct SymbolFeedsTimestampRow: View, Equatable {
+    private let update: FeedsUpdate
 
-    @Environment(\.modelContext)
-    private var modelContext
-
-    @Query
-    private var feed: [Feed]
-
-    init(symbol: Symbol) {
-        self.symbol = symbol
-
-        let name = symbol.id
-
-        let predicate = #Predicate<Feed> { feed in
-            feed.symbol == name
-        }
-
-        _feed = Query(
-            filter: predicate, animation: .default
-        )
+    init(_ update: FeedsUpdate) {
+        self.update = update
     }
 
     var body: some View {
         Text(text)
             .foregroundStyle(fill)
             .contentTransition(.interpolate)
+            .animation(.bouncy, value: update)
     }
 }
 
@@ -42,7 +27,7 @@ private extension SymbolFeedsTimestampRow {
     }
 
     var timestamp: Date? {
-        feed.first?.price?.timestamp
+        update.timestamp
     }
 
     var isDateExists: Bool {

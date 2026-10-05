@@ -10,7 +10,19 @@ struct SymbolFeedsPricesSearchContentView: View {
     private var modelContext
 
     @Environment(\.forexService)
-    var forexService
+    private var forexService
+
+    @Environment(\.cryptoService)
+    private var cryptoService
+
+    @Environment(\.stockService)
+    private var stockService
+
+    @Environment(\.commoditiesService)
+    private var commoditiesService
+
+    @Environment(\.swiftDataSync)
+    private var swiftDataSync
 
     @Query
     private var dataModel: [SymbolsStorage]
@@ -23,7 +35,7 @@ struct SymbolFeedsPricesSearchContentView: View {
     private var subscriptions: Set<String>
 
     @State
-    private var selectedItems = Set<Symbol.ID>()
+    private var selectedItems = Set<FeedsUpdate.ID>()
 
     @Binding
     private var searchText: String
@@ -32,20 +44,10 @@ struct SymbolFeedsPricesSearchContentView: View {
     private var isPresented: Bool
 
     @State
-    private var isSync: Bool = false
-
-    @State
     private var symbolType: SymbolType = .forex
 
-    private var storagePredicate: Predicate<SymbolsStorage> {
-        // let uppercased = searchText.uppercased()
-
-        let typeRaw = symbolType.rawValue
-        return #Predicate<SymbolsStorage> {
-            $0.typeRaw == typeRaw
-            // $0.symbol.starts(with: uppercased)
-        }
-    }
+    @State
+    var feedsUpdates = SwiftDataFeedsObserver()
 
     init(
         _ subscriptions: Binding<Set<String>>,
@@ -59,57 +61,131 @@ struct SymbolFeedsPricesSearchContentView: View {
 
     var body: some View {
         if isPresented {
-            SymbolFeedPricesListView(symbols: orderedSubscriptions, selectedItems: $selectedItems)
+            // ScrollView {
+            SymbolFeedPricesListView(
+                updates: feedsUpdates.updates,
+                selectedItems: $selectedItems
+            )
+            .contextMenu {
+                Button {
+                    addSelected()
+                } label: {
+                    Label("Add Selected", systemImage: "bag.badge.plus")
+                }.disabled(selectedItems.isEmpty)
+            }
+            .onChange(of: searchText) {
+                feedsUpdates.subscribed = filteredSubscriptions
+            }
+            .onChange(of: storage) {
+                feedsUpdates.subscribed = filteredSubscriptions
+            }
+            .onChange(of: symbolType) {
+                feedsUpdates.subscribed = filteredSubscriptions
 
-                .contextMenu {
-                    Button {
-                        addSelected()
-                    } label: {
-                        Label("Add Selected", systemImage: "bag.badge.plus")
-                    }.disabled(selectedItems.isEmpty)
-                }
-
-                .task {
-                    guard isSync == false else { return }
-
+                Task {
                     do {
-                        let coordinator = SwiftDataForexPairsSyncCoordinator()
-
-                        try await coordinator
-                            .sync(context: modelContext, service: forexService)
-                        isSync = true
+                        try await syncCoreData(type: symbolType)
                     } catch {
                         // TODO: Logging errors
+                        print(error)
                     }
                 }
+            }
+            .onAppear {
+                do {
+                    try feedsUpdates
+                        .start(
+                            context: modelContext,
+                            subscribed: filteredSubscriptions
+                        )
+                } catch {
+                    // TODO: Logging error
+                }
+            }.onDisappear {
+                feedsUpdates.stop()
+            }
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    SymbolTypePicker(type: $symbolType)
+                }
+            }
+            .task {
+                do {
+                    try await syncCoreData(type: symbolType)
+
+                } catch {
+                    // TODO: Logging errors
+                }
+            }
+        }
+    }
+
+    func syncCoreData(type: SymbolType) async throws {
+        do {
+            switch type {
+            case .forex:
+                try await swiftDataSync.sync(context: modelContext, with: forexService)
+
+            case .crypto:
+                try await swiftDataSync
+                    .sync(context: modelContext, with: cryptoService)
+
+            case .commodities:
+                try await swiftDataSync
+                    .sync(context: modelContext, with: commoditiesService)
+
+            case .stock:
+                try await swiftDataSync
+                    .sync(context: modelContext, with: stockService)
+            }
+        } catch {
+            // TODO: Logging errors
+
+            print(error)
         }
     }
 
     func addSelected() {
         withAnimation {
-            subscriptions = subscriptions.union(selectedItems)
+            let selected = selectedItems.map { $0.id }
+
+            subscriptions = subscriptions.union(selected)
             selectedItems = []
             isPresented = false
         }
     }
 
-    var orderedSubscriptions: [Symbol] {
-        guard let storage else { return [] }
-
-        if searchText.isEmpty {
-            return storage.symbols
-                .sorted()
-                .map {
-                    Symbol($0)
-                }
+    var filteredSubscriptions: Set<String> {
+        guard let storage else {
+            return []
         }
+        let symbols = storage.symbols
 
-        return storage.symbols
-            .filter {
-                $0.localizedCaseInsensitiveContains(searchText)
-            }.sorted()
-            .map {
-                Symbol($0)
+        return filterd(symbols: symbols)
+    }
+
+    func filterd(symbols: Set<String>) -> Set<String> {
+        if searchText.isEmpty {
+            return symbols
+        }
+        return symbols.filter {
+            $0.localizedCaseInsensitiveContains(searchText)
+        }
+    }
+}
+
+struct SymbolTypePicker: View {
+    @Binding
+    var type: SymbolType
+
+    var body: some View {
+        Picker("Type", selection: $type) {
+            ForEach(
+                SymbolType.allCases,
+                id: \.self
+            ) { selected in
+                Text("\(selected.rawValue)")
             }
+        }.pickerStyle(.segmented)
     }
 }

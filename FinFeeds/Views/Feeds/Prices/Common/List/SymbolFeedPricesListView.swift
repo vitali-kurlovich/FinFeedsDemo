@@ -5,7 +5,7 @@
 import SwiftUI
 
 struct SymbolFeedPricesListView: View {
-    let symbols: [Symbol]
+    let updates: [FeedsUpdate]
 
     #if os(macOS)
         let isCompact = false
@@ -20,20 +20,20 @@ struct SymbolFeedPricesListView: View {
     #endif
 
     @Binding
-    var selectedItems: Set<Symbol.ID>
+    var selectedItems: Set<FeedsUpdate.ID>
 
     var body: some View {
-        Table(symbols, selection: $selectedItems) {
-            TableColumn("Symbol") { symbol in
-                SymbolFeedsRow(symbol: symbol)
+        Table(updates, selection: $selectedItems) {
+            TableColumn("Symbol") { update in
+                SymbolFeedsRow(update)
             }
-            .width(min: 44, max: 88)
-            TableColumn("Price") { symbol in
-                SymbolFeedsPriceRow(symbol: symbol)
+            .width(min: 44, max: 200)
+            TableColumn("Price") { update in
+                SymbolFeedsPriceRow(update)
             }
             if isCompact == false {
-                TableColumn("Last Update") { symbol in
-                    SymbolFeedsTimestampRow(symbol: symbol)
+                TableColumn("Last Update") { update in
+                    SymbolFeedsTimestampRow(update)
                 }
             }
         }
