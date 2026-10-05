@@ -37,3 +37,25 @@ extension ServicesLocator {
         apiKeyService: apiKeyService
     )
 }
+
+extension ServicesLocator {
+    static let cryptoService: any CryptoPairsService = TwelveDataCryptoPairsService(
+        apiKeyService: apiKeyService
+    )
+}
+
+extension ServicesLocator {
+    static let stockService: any StocksService = TwelveDataStocksService(
+        apiKeyService: apiKeyService
+    )
+}
+
+extension ServicesLocator {
+    static let commoditiesService: any CommoditiesPairsService = TwelveDataCommoditiesPairsService(
+        apiKeyService: apiKeyService
+    )
+}
+
+extension ServicesLocator {
+    static let swiftDataSync = SwiftDataSync()
+}

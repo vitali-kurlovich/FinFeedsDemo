@@ -13,3 +13,7 @@ extension View {
         environment(\.forexService, service)
     }
 }
+
+
+
+

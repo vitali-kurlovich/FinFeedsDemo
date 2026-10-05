@@ -1,7 +1,4 @@
 //
-//  SwiftDataModel.swift
-//  FinFeeds
-//
 //  Created by Kurlovich Vitali on 10/3/26.
 //
 
@@ -19,10 +16,11 @@ enum PersistentModels {
     }
 }
 
-enum SymbolType: String, Codable {
+enum SymbolType: String, Codable, Hashable, Sendable, CaseIterable {
     case forex
     case crypto
     case stock
+    case commodities
 }
 
 @Model
@@ -74,6 +72,7 @@ final class Price {
 
 @Model
 final class Feed {
+    @Attribute(.unique)
     var symbol: String
     var price: Price?
 

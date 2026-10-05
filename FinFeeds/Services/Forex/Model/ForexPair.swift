@@ -5,3 +5,4 @@
 public nonisolated struct ForexPair: Equatable, Sendable {
     public let symbol: Symbol
 }
+
