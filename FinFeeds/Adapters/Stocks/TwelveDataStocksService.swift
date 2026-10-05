@@ -1,19 +1,19 @@
 //
-//  Created by Kurlovich Vitali on 10/4/26.
+//  Created by Kurlovich Vitali on 10/5/26.
 //
 
 import TwelveDataREST
 
-nonisolated struct TwelveDataForexPairsService: ForexPairsService {
+struct TwelveDataStocksService: StocksService {
     let apiKeyService: any ApiKeyService
 
-    func forexPairs() async throws(RestError) -> [ForexPair] {
+    func stocks() async throws(RestError) -> [StockInstrument] {
         do {
             let rest = TwelveDataREST(apiKey: apiKeyService.apiKey)
 
-            let response = try await rest.forexPairs()
+            let response = try await rest.stocks()
             return response.data.map { pair in
-                ForexPair(pair)
+                StockInstrument(pair)
             }
 
         } catch {
