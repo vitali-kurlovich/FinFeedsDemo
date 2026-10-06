@@ -7,39 +7,22 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		542E16293074FD0C006E02BE /* TwelveDataAdapter in Frameworks */ = {isa = PBXBuildFile; productRef = 542E16283074FD0C006E02BE /* TwelveDataAdapter */; };
+		542E162C3074FD49006E02BE /* DataLayer in Frameworks */ = {isa = PBXBuildFile; productRef = 542E162B3074FD49006E02BE /* DataLayer */; };
 		544FDC3F3070E0B400432200 /* LoggingBootstrap in Frameworks */ = {isa = PBXBuildFile; productRef = 544FDC3E3070E0B400432200 /* LoggingBootstrap */; };
 		544FDC413070E0B400432200 /* LoggingBootstrapUI in Frameworks */ = {isa = PBXBuildFile; productRef = 544FDC403070E0B400432200 /* LoggingBootstrapUI */; };
 		544FDC443070E0C500432200 /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 544FDC433070E0C500432200 /* AsyncAlgorithms */; };
 		544FDC463070E0C500432200 /* AsyncStreaming in Frameworks */ = {isa = PBXBuildFile; productRef = 544FDC453070E0C500432200 /* AsyncStreaming */; };
-		54A286383074DD6200E0FCC7 /* demo-service-layer in Frameworks */ = {isa = PBXBuildFile; productRef = 54A286373074DD6200E0FCC7 /* demo-service-layer */; };
-		54C31C8E30739B9D0042476E /* TwelveDataREST in Frameworks */ = {isa = PBXBuildFile; productRef = 54C31C8D30739B9D0042476E /* TwelveDataREST */; };
-		54C31C9030739B9D0042476E /* TwelveDataStream in Frameworks */ = {isa = PBXBuildFile; productRef = 54C31C8F30739B9D0042476E /* TwelveDataStream */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		54DDDB68306CDA2400F169D6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 000000000000000000000000 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 000000000000000100000000;
-			remoteInfo = FinFeeds;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		000000000000000000000120 /* FinFeeds.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinFeeds.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		54DDDB64306CDA2400F169D6 /* FinFeedsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FinFeedsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		000000000000000000000010 /* FinFeeds */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = FinFeeds;
-			sourceTree = "<group>";
-		};
-		54DDDB65306CDA2400F169D6 /* FinFeedsTests */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = FinFeedsTests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -49,17 +32,11 @@
 			isa = PBXFrameworksBuildPhase;
 			files = (
 				544FDC463070E0C500432200 /* AsyncStreaming in Frameworks */,
-				54C31C9030739B9D0042476E /* TwelveDataStream in Frameworks */,
-				54C31C8E30739B9D0042476E /* TwelveDataREST in Frameworks */,
-				54A286383074DD6200E0FCC7 /* demo-service-layer in Frameworks */,
+				542E16293074FD0C006E02BE /* TwelveDataAdapter in Frameworks */,
+				542E162C3074FD49006E02BE /* DataLayer in Frameworks */,
 				544FDC3F3070E0B400432200 /* LoggingBootstrap in Frameworks */,
 				544FDC413070E0B400432200 /* LoggingBootstrapUI in Frameworks */,
 				544FDC443070E0C500432200 /* AsyncAlgorithms in Frameworks */,
-			);
-		};
-		54DDDB61306CDA2400F169D6 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			files = (
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -69,7 +46,6 @@
 			isa = PBXGroup;
 			children = (
 				000000000000000000000010 /* FinFeeds */,
-				54DDDB65306CDA2400F169D6 /* FinFeedsTests */,
 				54DDDBB1306D477E00F169D6 /* Frameworks */,
 				000000000000000000000020 /* Products */,
 			);
@@ -79,7 +55,6 @@
 			isa = PBXGroup;
 			children = (
 				000000000000000000000120 /* FinFeeds.app */,
-				54DDDB64306CDA2400F169D6 /* FinFeedsTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -113,34 +88,12 @@
 				544FDC403070E0B400432200 /* LoggingBootstrapUI */,
 				544FDC433070E0C500432200 /* AsyncAlgorithms */,
 				544FDC453070E0C500432200 /* AsyncStreaming */,
-				54C31C8D30739B9D0042476E /* TwelveDataREST */,
-				54C31C8F30739B9D0042476E /* TwelveDataStream */,
-				54A286373074DD6200E0FCC7 /* demo-service-layer */,
+				542E16283074FD0C006E02BE /* TwelveDataAdapter */,
+				542E162B3074FD49006E02BE /* DataLayer */,
 			);
 			productName = MyApp;
 			productReference = 000000000000000000000120 /* FinFeeds.app */;
 			productType = "com.apple.product-type.application";
-		};
-		54DDDB63306CDA2400F169D6 /* FinFeedsTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 54DDDB6A306CDA2400F169D6 /* Build configuration list for PBXNativeTarget "FinFeedsTests" */;
-			buildPhases = (
-				54DDDB60306CDA2400F169D6 /* Sources */,
-				54DDDB61306CDA2400F169D6 /* Frameworks */,
-				54DDDB62306CDA2400F169D6 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				54DDDB69306CDA2400F169D6 /* PBXTargetDependency */,
-			);
-			fileSystemSynchronizedGroups = (
-				54DDDB65306CDA2400F169D6 /* FinFeedsTests */,
-			);
-			name = FinFeedsTests;
-			productName = FinFeedsTests;
-			productReference = 54DDDB64306CDA2400F169D6 /* FinFeedsTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -154,10 +107,6 @@
 				TargetAttributes = {
 					000000000000000100000000 = {
 						CreatedOnToolsVersion = 26.3;
-					};
-					54DDDB63306CDA2400F169D6 = {
-						CreatedOnToolsVersion = 27.0;
-						TestTargetID = 000000000000000100000000;
 					};
 				};
 			};
@@ -173,8 +122,8 @@
 			packageReferences = (
 				544FDC3D3070E0B400432200 /* XCRemoteSwiftPackageReference "swift-logging-bootstrap" */,
 				544FDC423070E0C500432200 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
-				54C31C8C30739B9D0042476E /* XCRemoteSwiftPackageReference "swift-twelvedata" */,
-				54A286363074DD6200E0FCC7 /* XCRemoteSwiftPackageReference "demo-service-layer" */,
+				542E16273074FD0C006E02BE /* XCRemoteSwiftPackageReference "demo-twelvedata-service-layer" */,
+				542E162A3074FD49006E02BE /* XCRemoteSwiftPackageReference "demo-service-layer" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = 000000000000000000000020 /* Products */;
@@ -182,18 +131,12 @@
 			projectRoot = "";
 			targets = (
 				000000000000000100000000 /* FinFeeds */,
-				54DDDB63306CDA2400F169D6 /* FinFeedsTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		000000000000000140000000 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			files = (
-			);
-		};
-		54DDDB62306CDA2400F169D6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
 			);
@@ -206,20 +149,7 @@
 			files = (
 			);
 		};
-		54DDDB60306CDA2400F169D6 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			files = (
-			);
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		54DDDB69306CDA2400F169D6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 000000000000000100000000 /* FinFeeds */;
-			targetProxy = 54DDDB68306CDA2400F169D6 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		000000000000000011000000 /* Debug configuration for PBXProject "FinFeeds" */ = {
@@ -452,58 +382,6 @@
 			};
 			name = Release;
 		};
-		54DDDB6B306CDA2400F169D6 /* Debug configuration for PBXNativeTarget "FinFeedsTests" */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5SLX4F29EU;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
-				MACOSX_DEPLOYMENT_TARGET = 27.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.svg.FinFeedsTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FinFeeds.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FinFeeds";
-				XROS_DEPLOYMENT_TARGET = 27.0;
-			};
-			name = Debug;
-		};
-		54DDDB6C306CDA2400F169D6 /* Release configuration for PBXNativeTarget "FinFeedsTests" */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5SLX4F29EU;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
-				MACOSX_DEPLOYMENT_TARGET = 27.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = dev.svg.FinFeedsTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = auto;
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx xros xrsimulator";
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2,7";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FinFeeds.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/FinFeeds";
-				XROS_DEPLOYMENT_TARGET = 27.0;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -523,17 +401,25 @@
 			);
 			defaultConfigurationName = Release;
 		};
-		54DDDB6A306CDA2400F169D6 /* Build configuration list for PBXNativeTarget "FinFeedsTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				54DDDB6B306CDA2400F169D6 /* Debug configuration for PBXNativeTarget "FinFeedsTests" */,
-				54DDDB6C306CDA2400F169D6 /* Release configuration for PBXNativeTarget "FinFeedsTests" */,
-			);
-			defaultConfigurationName = Release;
-		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		542E16273074FD0C006E02BE /* XCRemoteSwiftPackageReference "demo-twelvedata-service-layer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/vitali-kurlovich/demo-twelvedata-service-layer/";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.1;
+			};
+		};
+		542E162A3074FD49006E02BE /* XCRemoteSwiftPackageReference "demo-service-layer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/vitali-kurlovich/demo-service-layer/";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.4;
+			};
+		};
 		544FDC3D3070E0B400432200 /* XCRemoteSwiftPackageReference "swift-logging-bootstrap" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/vitali-kurlovich/swift-logging-bootstrap/";
@@ -550,25 +436,19 @@
 				minimumVersion = 1.1.7;
 			};
 		};
-		54A286363074DD6200E0FCC7 /* XCRemoteSwiftPackageReference "demo-service-layer" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/vitali-kurlovich/demo-service-layer/";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.0.2;
-			};
-		};
-		54C31C8C30739B9D0042476E /* XCRemoteSwiftPackageReference "swift-twelvedata" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/vitali-kurlovich/swift-twelvedata";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.3.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		542E16283074FD0C006E02BE /* TwelveDataAdapter */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 542E16273074FD0C006E02BE /* XCRemoteSwiftPackageReference "demo-twelvedata-service-layer" */;
+			productName = TwelveDataAdapter;
+		};
+		542E162B3074FD49006E02BE /* DataLayer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 542E162A3074FD49006E02BE /* XCRemoteSwiftPackageReference "demo-service-layer" */;
+			productName = DataLayer;
+		};
 		544FDC3E3070E0B400432200 /* LoggingBootstrap */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 544FDC3D3070E0B400432200 /* XCRemoteSwiftPackageReference "swift-logging-bootstrap" */;
@@ -588,21 +468,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 544FDC423070E0C500432200 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */;
 			productName = AsyncStreaming;
-		};
-		54A286373074DD6200E0FCC7 /* demo-service-layer */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 54A286363074DD6200E0FCC7 /* XCRemoteSwiftPackageReference "demo-service-layer" */;
-			productName = "demo-service-layer";
-		};
-		54C31C8D30739B9D0042476E /* TwelveDataREST */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 54C31C8C30739B9D0042476E /* XCRemoteSwiftPackageReference "swift-twelvedata" */;
-			productName = TwelveDataREST;
-		};
-		54C31C8F30739B9D0042476E /* TwelveDataStream */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 54C31C8C30739B9D0042476E /* XCRemoteSwiftPackageReference "swift-twelvedata" */;
-			productName = TwelveDataStream;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -3,6 +3,7 @@
 //
 
 import Observation
+import TwelveDataAdapter
 
 @Observable
 final class SettingsModel {

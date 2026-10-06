@@ -3,6 +3,7 @@
 //
 
 import DataLayer
+import TwelveDataAdapter
 
 struct ServicesLocator {
     private init() {}
@@ -10,52 +11,40 @@ struct ServicesLocator {
 
 extension ServicesLocator {
     static let apiKeyService: any TwelveDataApiKeyService = TwelveDataApiKey()
+    
+    static let locator = TwelveDataServiceLocator(apiKeyService: Self.apiKeyService)
+    
 }
 
-extension ServicesLocator {
-    private static let twelveDataSymbolPriceService = TwelveDataSymbolPriceAdapter(
-        apiKeyService: apiKeyService
-    )
-}
 
 extension ServicesLocator {
     static var symbolPriceService: any SymbolPriceService {
-        twelveDataSymbolPriceService
+        locator.symbolPriceService
     }
-}
 
-extension ServicesLocator {
     static var connectivityService: any ConnectivityService {
-        twelveDataSymbolPriceService
+        locator.connectivityService
+    }
+
+    static var forexService: any ForexPairsService {
+        locator.forexService
+    }
+
+    static var cryptoService: any CryptoPairsService {
+        locator.cryptoService
+    }
+
+    static var stockService: any StocksService {
+        FakeStocks()
+    }
+
+    static var commoditiesService: any CommoditiesPairsService {
+        locator.commoditiesService
     }
 }
 
 extension ServicesLocator {
     static let loggingService: any LoggingService = LoggingServiceAdapter()
-}
-
-extension ServicesLocator {
-    static let forexService: any ForexPairsService = TwelveDataForexPairsService(
-        apiKeyService: apiKeyService
-    )
-}
-
-extension ServicesLocator {
-    static let cryptoService: any CryptoPairsService = TwelveDataCryptoPairsService(
-        apiKeyService: apiKeyService
-    )
-}
-
-extension ServicesLocator {
-    static let stockService: any StocksService = TwelveDataStocksService(
-        apiKeyService: apiKeyService
-    )
-}
-
-extension ServicesLocator {
-    static let commoditiesService: any CommoditiesPairsService = TwelveDataCommoditiesPairsService(
-        apiKeyService: apiKeyService
-    )
 }
 
 extension ServicesLocator {

@@ -3,6 +3,7 @@
 //
 
 import SwiftUI
+import TwelveDataAdapter
 
 extension EnvironmentValues {
     @Entry var apiKeyService = ServicesLocator.apiKeyService

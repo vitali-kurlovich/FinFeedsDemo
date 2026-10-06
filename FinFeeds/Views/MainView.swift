@@ -4,6 +4,7 @@
 
 import SwiftData
 import SwiftUI
+import TwelveDataAdapter
 
 enum AppTab: Hashable {
     case feeds

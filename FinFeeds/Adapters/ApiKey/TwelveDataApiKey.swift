@@ -4,6 +4,7 @@
 
 import AsyncAlgorithms
 import Foundation
+import TwelveDataAdapter
 
 private extension UserDefaults {
     private nonisolated static var key: String {
