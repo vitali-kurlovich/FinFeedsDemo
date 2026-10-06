@@ -9,10 +9,10 @@ nonisolated struct SwiftDataSymbolsStorageSyncResolver {}
 
 extension SwiftDataSymbolsStorageSyncResolver {
     nonisolated func storage(context: ModelContext, for type: SymbolType) throws -> SymbolsStorage? {
-        let typeRaw = type.rawValue
+        // let typeRaw = type.rawValue
 
         let predicate = #Predicate<SymbolsStorage> {
-            $0.typeRaw == typeRaw
+            $0.type == type
         }
 
         var descriptor = FetchDescriptor<SymbolsStorage>(predicate: predicate)

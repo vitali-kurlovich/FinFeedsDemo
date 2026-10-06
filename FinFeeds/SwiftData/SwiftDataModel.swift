@@ -24,35 +24,23 @@ enum SymbolType: String, Codable, Hashable, Sendable, CaseIterable {
 
 @Model
 final class SymbolsStorage {
-    var typeRaw: String
-
-    var type: SymbolType {
-        get {
-            SymbolType(rawValue: typeRaw) ?? .forex
-        }
-        set {
-            typeRaw = newValue.rawValue
-        }
-    }
+    var type: SymbolType
 
     var symbols: Set<String>
-    var lastLoadedPage: Int?
     var lastUpdate: Date
 
     init(type: SymbolType, symbols: Set<String>, lastUpdate: Date) {
-        typeRaw = type.rawValue
         self.symbols = symbols
         self.lastUpdate = lastUpdate
+        self.type = type
     }
 }
 
 @Model
 final class FeedsSubscriptions {
-    var name: String
     var subscriptions: Set<String>
 
-    init(name: String, subscriptions: Set<String>) {
-        self.name = name
+    init(subscriptions: Set<String>) {
         self.subscriptions = subscriptions
     }
 }
