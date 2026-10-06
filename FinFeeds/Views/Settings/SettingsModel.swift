@@ -14,10 +14,6 @@ final class SettingsModel {
 
     var apiKey: String
 
-    var isApiKeyChanged: Bool {
-        service?.apiKey != apiKey
-    }
-
     var isReady: Bool {
         service != nil
     }

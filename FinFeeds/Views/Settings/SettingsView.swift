@@ -19,7 +19,7 @@ struct SettingsView: View {
                 Link("You can find API keys by link", destination: url)
             }
         }.padding()
-            .task {
+            .onAppear {
                 model.service = service
             }
     }

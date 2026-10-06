@@ -14,7 +14,7 @@ struct SettingsEditView: View {
 
             Button("Save") {
                 model.save()
-            }.disabled(!model.isApiKeyChanged)
+            }
         }.disabled(!model.isReady)
     }
 }

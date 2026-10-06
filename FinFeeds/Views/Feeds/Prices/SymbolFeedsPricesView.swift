@@ -9,9 +9,8 @@ struct SymbolFeedsPricesView: View {
     @Environment(\.modelContext)
     private var modelContext
 
-    @Query(filter: #Predicate<FeedsSubscriptions> {
-        $0.name == "feeds"
-    }) private var dataModel: [FeedsSubscriptions]
+    @Query
+    private var subscriptionsStorage: [FeedsSubscriptions]
 
     @State
     private var searchText: String = ""
@@ -19,15 +18,18 @@ struct SymbolFeedsPricesView: View {
     @State
     private var isSearchPresented: Bool = false
 
+    @FocusState
+    private var searchFocused: Bool
+
     var subscriptionsBinding: Binding<Set<String>> {
         .init(get: {
-            dataModel.first?.subscriptions ?? []
+            subscriptionsStorage.first?.subscriptions ?? []
         }, set: { subscriptions in
-            if let feeds = dataModel.first {
+            if let feeds = subscriptionsStorage.first {
                 feeds.subscriptions = subscriptions
 
             } else {
-                let feeds = FeedsSubscriptions(name: "feeds", subscriptions: subscriptions)
+                let feeds = FeedsSubscriptions(subscriptions: subscriptions)
                 modelContext.insert(feeds)
             }
         })
@@ -36,12 +38,20 @@ struct SymbolFeedsPricesView: View {
     var body: some View {
         SymbolFeedsPricesContentView(subscriptionsBinding)
             .overlay {
-                SymbolFeedsPricesSearchContentView(
-                    subscriptionsBinding,
-                    searchText: $searchText,
-                    isPresented: $isSearchPresented
-                )
+                if isSearchPresented {
+                    SymbolFeedsPricesSearchContentView(
+                        subscriptionsBinding,
+                        searchText: $searchText
+                    )
+                }
             }
             .searchable(text: $searchText, isPresented: $isSearchPresented)
+            .searchFocused($searchFocused)
+            .onChange(of: isSearchPresented) {
+                searchFocused = isSearchPresented
+                if isSearchPresented == false {
+                    searchText = ""
+                }
+            }
     }
 }

@@ -40,9 +40,6 @@ struct SymbolFeedsPricesSearchContentView: View {
     @Binding
     private var searchText: String
 
-    @Binding
-    private var isPresented: Bool
-
     @State
     private var symbolType: SymbolType = .forex
 
@@ -51,72 +48,76 @@ struct SymbolFeedsPricesSearchContentView: View {
 
     init(
         _ subscriptions: Binding<Set<String>>,
-        searchText: Binding<String>,
-        isPresented: Binding<Bool>
+        searchText: Binding<String>
     ) {
         _subscriptions = subscriptions
         _searchText = searchText
-        _isPresented = isPresented
     }
 
     var body: some View {
-        if isPresented {
-            // ScrollView {
-            SymbolFeedPricesListView(
-                updates: feedsUpdates.updates,
-                selectedItems: $selectedItems
-            )
-            .contextMenu {
-                Button {
-                    addSelected()
-                } label: {
-                    Label("Add Selected", systemImage: "bag.badge.plus")
-                }.disabled(selectedItems.isEmpty)
-            }
-            .onChange(of: searchText) {
-                feedsUpdates.subscribed = filteredSubscriptions
-            }
-            .onChange(of: storage) {
-                feedsUpdates.subscribed = filteredSubscriptions
-            }
-            .onChange(of: symbolType) {
-                feedsUpdates.subscribed = filteredSubscriptions
+        SymbolFeedPricesListView(
+            updates: feedsUpdates.updates,
+            selectedItems: $selectedItems
+        )
+        .contextMenu {
+            Button {
+                addSelected()
+            } label: {
+                Label("Add Selected", systemImage: "bag.badge.plus")
+            }.disabled(selectedItems.isEmpty)
+        }
+        .onChange(of: searchText) {
+            feedsUpdates.subscribed = filteredSubscriptions
+        }
+        .onChange(of: storage) {
+            feedsUpdates.subscribed = filteredSubscriptions
+        }
+        .onChange(of: symbolType) {
+            feedsUpdates.subscribed = filteredSubscriptions
 
-                Task {
-                    do {
-                        try await syncCoreData(type: symbolType)
-                    } catch {
-                        // TODO: Logging errors
-                        print(error)
-                    }
-                }
-            }
-            .onAppear {
-                do {
-                    try feedsUpdates
-                        .start(
-                            context: modelContext,
-                            subscribed: filteredSubscriptions
-                        )
-                } catch {
-                    // TODO: Logging error
-                }
-            }.onDisappear {
-                feedsUpdates.stop()
-            }
-            .toolbar {
-                ToolbarItem(placement: .principal) {
-                    SymbolTypePicker(type: $symbolType)
-                }
-            }
-            .task {
+            Task {
                 do {
                     try await syncCoreData(type: symbolType)
-
                 } catch {
                     // TODO: Logging errors
+                    print(error)
                 }
             }
+        }
+        .onAppear {
+            do {
+                try feedsUpdates
+                    .start(
+                        context: modelContext,
+                        subscribed: filteredSubscriptions
+                    )
+            } catch {
+                // TODO: Logging error
+            }
+        }.onDisappear {
+            feedsUpdates.stop()
+        }
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                SymbolTypePicker(type: $symbolType)
+            }
+        }
+        .task {
+            do {
+                try await syncCoreData(type: symbolType)
+            } catch {
+                // TODO: Logging errors
+            }
+        }
+    }
+}
+
+private extension SymbolFeedsPricesSearchContentView {
+    func addSelected() {
+        withAnimation {
+            let selected = selectedItems.map { $0.id }
+            subscriptions = subscriptions.union(selected)
+            selectedItems = []
         }
     }
 
@@ -144,17 +145,9 @@ struct SymbolFeedsPricesSearchContentView: View {
             print(error)
         }
     }
+}
 
-    func addSelected() {
-        withAnimation {
-            let selected = selectedItems.map { $0.id }
-
-            subscriptions = subscriptions.union(selected)
-            selectedItems = []
-            isPresented = false
-        }
-    }
-
+private extension SymbolFeedsPricesSearchContentView {
     var filteredSubscriptions: Set<String> {
         guard let storage else {
             return []
