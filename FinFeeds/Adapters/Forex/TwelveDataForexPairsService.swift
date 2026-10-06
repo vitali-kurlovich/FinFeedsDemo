@@ -2,6 +2,7 @@
 //  Created by Kurlovich Vitali on 10/4/26.
 //
 
+import DataLayer
 import TwelveDataREST
 
 nonisolated struct TwelveDataForexPairsService: ForexPairsService {

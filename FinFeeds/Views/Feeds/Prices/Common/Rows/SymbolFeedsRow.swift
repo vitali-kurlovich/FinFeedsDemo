@@ -2,6 +2,7 @@
 //  Created by Kurlovich Vitali on 10/3/26.
 //
 
+import DataLayer
 import Foundation
 import SwiftData
 import SwiftUI

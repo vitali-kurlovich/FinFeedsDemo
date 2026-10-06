@@ -11,6 +11,7 @@
 		544FDC413070E0B400432200 /* LoggingBootstrapUI in Frameworks */ = {isa = PBXBuildFile; productRef = 544FDC403070E0B400432200 /* LoggingBootstrapUI */; };
 		544FDC443070E0C500432200 /* AsyncAlgorithms in Frameworks */ = {isa = PBXBuildFile; productRef = 544FDC433070E0C500432200 /* AsyncAlgorithms */; };
 		544FDC463070E0C500432200 /* AsyncStreaming in Frameworks */ = {isa = PBXBuildFile; productRef = 544FDC453070E0C500432200 /* AsyncStreaming */; };
+		54A286383074DD6200E0FCC7 /* demo-service-layer in Frameworks */ = {isa = PBXBuildFile; productRef = 54A286373074DD6200E0FCC7 /* demo-service-layer */; };
 		54C31C8E30739B9D0042476E /* TwelveDataREST in Frameworks */ = {isa = PBXBuildFile; productRef = 54C31C8D30739B9D0042476E /* TwelveDataREST */; };
 		54C31C9030739B9D0042476E /* TwelveDataStream in Frameworks */ = {isa = PBXBuildFile; productRef = 54C31C8F30739B9D0042476E /* TwelveDataStream */; };
 /* End PBXBuildFile section */
@@ -50,6 +51,7 @@
 				544FDC463070E0C500432200 /* AsyncStreaming in Frameworks */,
 				54C31C9030739B9D0042476E /* TwelveDataStream in Frameworks */,
 				54C31C8E30739B9D0042476E /* TwelveDataREST in Frameworks */,
+				54A286383074DD6200E0FCC7 /* demo-service-layer in Frameworks */,
 				544FDC3F3070E0B400432200 /* LoggingBootstrap in Frameworks */,
 				544FDC413070E0B400432200 /* LoggingBootstrapUI in Frameworks */,
 				544FDC443070E0C500432200 /* AsyncAlgorithms in Frameworks */,
@@ -113,6 +115,7 @@
 				544FDC453070E0C500432200 /* AsyncStreaming */,
 				54C31C8D30739B9D0042476E /* TwelveDataREST */,
 				54C31C8F30739B9D0042476E /* TwelveDataStream */,
+				54A286373074DD6200E0FCC7 /* demo-service-layer */,
 			);
 			productName = MyApp;
 			productReference = 000000000000000000000120 /* FinFeeds.app */;
@@ -171,6 +174,7 @@
 				544FDC3D3070E0B400432200 /* XCRemoteSwiftPackageReference "swift-logging-bootstrap" */,
 				544FDC423070E0C500432200 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */,
 				54C31C8C30739B9D0042476E /* XCRemoteSwiftPackageReference "swift-twelvedata" */,
+				54A286363074DD6200E0FCC7 /* XCRemoteSwiftPackageReference "demo-service-layer" */,
 			);
 			preferredProjectObjectVersion = 90;
 			productRefGroup = 000000000000000000000020 /* Products */;
@@ -546,6 +550,14 @@
 				minimumVersion = 1.1.7;
 			};
 		};
+		54A286363074DD6200E0FCC7 /* XCRemoteSwiftPackageReference "demo-service-layer" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/vitali-kurlovich/demo-service-layer/";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.0.2;
+			};
+		};
 		54C31C8C30739B9D0042476E /* XCRemoteSwiftPackageReference "swift-twelvedata" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/vitali-kurlovich/swift-twelvedata";
@@ -576,6 +588,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 544FDC423070E0C500432200 /* XCRemoteSwiftPackageReference "swift-async-algorithms" */;
 			productName = AsyncStreaming;
+		};
+		54A286373074DD6200E0FCC7 /* demo-service-layer */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 54A286363074DD6200E0FCC7 /* XCRemoteSwiftPackageReference "demo-service-layer" */;
+			productName = "demo-service-layer";
 		};
 		54C31C8D30739B9D0042476E /* TwelveDataREST */ = {
 			isa = XCSwiftPackageProductDependency;

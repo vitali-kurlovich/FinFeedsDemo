@@ -2,10 +2,11 @@
 //  Created by Kurlovich Vitali on 9/29/26.
 //
 
+import DataLayer
 import TwelveDataStream
 
 extension TwelveDataSymbolPriceAdapter: ConnectivityService {
-    var connectivity: AsyncStream<ConnectivityState> {
+    nonisolated var connectivity: AsyncStream<ConnectivityState> {
         connectivityService.connectivity
     }
 }

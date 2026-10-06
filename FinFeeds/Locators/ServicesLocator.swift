@@ -2,6 +2,8 @@
 //  Created by Kurlovich Vitali on 9/29/26.
 //
 
+import DataLayer
+
 struct ServicesLocator {
     private init() {}
 }

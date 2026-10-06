@@ -2,6 +2,7 @@
 //  Created by Kurlovich Vitali on 9/29/26.
 //
 
+import DataLayer
 import TwelveDataStream
 
 nonisolated struct TwelveDataConnectivityAdapter: ConnectivityService, Sendable {
