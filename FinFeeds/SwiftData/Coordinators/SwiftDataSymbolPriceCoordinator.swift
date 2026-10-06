@@ -26,7 +26,7 @@ final class SwiftDataSymbolPriceCoordinator {
     func start(service: any SymbolPriceService, context: ModelContext) {
         func update(with symbolPrice: SymbolPrice, in context: ModelContext) throws {
             let predicate = #Predicate<Feed> { feed in
-                feed.symbol == symbolPrice.symbol
+                feed.symbol == symbolPrice.symbol.rawValue
             }
 
             var descriptor = FetchDescriptor<Feed>(predicate: predicate)
@@ -38,7 +38,7 @@ final class SwiftDataSymbolPriceCoordinator {
 
             } else {
                 let feed = Feed(
-                    symbol: symbolPrice.symbol,
+                    symbol: symbolPrice.symbol.rawValue,
                     price: symbolPrice.price,
                     timestamp: symbolPrice.timestamp
                 )

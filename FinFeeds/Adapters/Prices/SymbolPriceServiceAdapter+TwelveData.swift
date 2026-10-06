@@ -142,7 +142,7 @@ private actor TwelveDataSymbolPriceRepository {
 extension SymbolPrice {
     nonisolated init(_ event: TwelvedataPriceEvent) {
         self.init(
-            symbol: event.symbol,
+            symbol: Symbol(event.symbol),
             timestamp: event.timestamp,
             price: event.price
         )
