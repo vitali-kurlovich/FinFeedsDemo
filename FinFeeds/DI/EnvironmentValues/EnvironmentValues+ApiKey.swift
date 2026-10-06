@@ -9,7 +9,7 @@ extension EnvironmentValues {
 }
 
 extension View {
-    func apiKeyService(_ service: any ApiKeyService) -> some View {
+    func apiKeyService(_ service: any TwelveDataApiKeyService) -> some View {
         environment(\.apiKeyService, service)
     }
 }

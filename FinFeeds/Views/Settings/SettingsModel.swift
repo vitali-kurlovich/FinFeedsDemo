@@ -6,7 +6,7 @@ import Observation
 
 @Observable
 final class SettingsModel {
-    var service: (any ApiKeyService)? {
+    var service: (any TwelveDataApiKeyService)? {
         didSet {
             apiKey = service?.apiKey ?? ""
         }
@@ -18,7 +18,7 @@ final class SettingsModel {
         service != nil
     }
 
-    init(_ service: (any ApiKeyService)? = nil) {
+    init(_ service: (any TwelveDataApiKeyService)? = nil) {
         self.service = service
         apiKey = service?.apiKey ?? ""
     }

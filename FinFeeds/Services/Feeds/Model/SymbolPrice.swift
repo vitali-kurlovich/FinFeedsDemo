@@ -8,6 +8,12 @@ public nonisolated struct SymbolPrice: Equatable, Codable, Sendable {
     public var symbol: String
     public var timestamp: Date
     public var price: Decimal
+    
+    public init(symbol: String, timestamp: Date, price: Decimal) {
+        self.symbol = symbol
+        self.timestamp = timestamp
+        self.price = price
+    }
 }
 
 extension SymbolPrice: Identifiable {

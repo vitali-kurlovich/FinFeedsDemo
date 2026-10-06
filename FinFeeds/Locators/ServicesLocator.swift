@@ -7,7 +7,7 @@ struct ServicesLocator {
 }
 
 extension ServicesLocator {
-    static let apiKeyService: any ApiKeyService = TwelveDataApiKey()
+    static let apiKeyService: any TwelveDataApiKeyService = TwelveDataApiKey()
 }
 
 extension ServicesLocator {

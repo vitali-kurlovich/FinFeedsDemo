@@ -5,9 +5,9 @@
 import TwelveDataREST
 
 nonisolated struct TwelveDataCommoditiesPairsService: CommoditiesPairsService {
-    let apiKeyService: any ApiKeyService
+    let apiKeyService: any TwelveDataApiKeyService
 
-    func commodities() async throws(RestError) -> [CommoditiesPair] {
+    func commodities() async throws(FetchError) -> [CommoditiesPair] {
         do {
             let rest = TwelveDataREST(apiKey: apiKeyService.apiKey)
 
@@ -17,7 +17,7 @@ nonisolated struct TwelveDataCommoditiesPairsService: CommoditiesPairsService {
             }
 
         } catch {
-            throw RestError(error)
+            throw FetchError(error)
         }
     }
 }

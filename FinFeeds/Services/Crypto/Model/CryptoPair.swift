@@ -4,4 +4,7 @@
 
 public nonisolated struct CryptoPair: Equatable, Sendable {
     public let symbol: Symbol
+    public init(symbol: Symbol) {
+        self.symbol = symbol
+    }
 }

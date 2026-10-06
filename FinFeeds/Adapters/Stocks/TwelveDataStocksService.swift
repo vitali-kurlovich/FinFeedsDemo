@@ -5,9 +5,9 @@
 import TwelveDataREST
 
 struct TwelveDataStocksService: StocksService {
-    let apiKeyService: any ApiKeyService
+    let apiKeyService: any TwelveDataApiKeyService
 
-    func stocks() async throws(RestError) -> [StockInstrument] {
+    func stocks() async throws(FetchError) -> [StockInstrument] {
         return ["AAPL", "RY:TSX", "TSLA"].map { StockInstrument(symbol: Symbol($0)) }
 
         do {
@@ -19,7 +19,7 @@ struct TwelveDataStocksService: StocksService {
             }
 
         } catch {
-            throw RestError(error)
+            throw FetchError(error)
         }
     }
 }

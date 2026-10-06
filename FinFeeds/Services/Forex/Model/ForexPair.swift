@@ -4,4 +4,7 @@
 
 public nonisolated struct ForexPair: Equatable, Sendable {
     public let symbol: Symbol
+    public init(symbol: Symbol) {
+        self.symbol = symbol
+    }
 }

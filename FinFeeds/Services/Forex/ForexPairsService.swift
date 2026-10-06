@@ -3,5 +3,5 @@
 //
 
 public nonisolated protocol ForexPairsService: Sendable {
-    func forexPairs() async throws(RestError) -> [ForexPair]
+    func forexPairs() async throws(FetchError) -> [ForexPair]
 }

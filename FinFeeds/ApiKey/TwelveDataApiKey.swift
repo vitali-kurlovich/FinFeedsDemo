@@ -21,7 +21,7 @@ private extension UserDefaults {
     }
 }
 
-nonisolated struct TwelveDataApiKey: ApiKeyService, @unchecked Sendable {
+nonisolated struct TwelveDataApiKey: TwelveDataApiKeyService, @unchecked Sendable {
     let userDefaults: UserDefaults
 
     let stream: any AsyncSequence<Void, Never>

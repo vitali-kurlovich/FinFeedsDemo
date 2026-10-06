@@ -3,5 +3,5 @@
 //
 
 public nonisolated protocol StocksService: Sendable {
-    func stocks() async throws(RestError) -> [StockInstrument]
+    func stocks() async throws(FetchError) -> [StockInstrument]
 }

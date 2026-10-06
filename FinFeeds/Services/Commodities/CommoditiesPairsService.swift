@@ -3,5 +3,5 @@
 //
 
 public nonisolated protocol CommoditiesPairsService: Sendable {
-    func commodities() async throws(RestError) -> [CommoditiesPair]
+    func commodities() async throws(FetchError) -> [CommoditiesPair]
 }

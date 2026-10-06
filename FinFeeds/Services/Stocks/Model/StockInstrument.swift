@@ -4,4 +4,8 @@
 
 public nonisolated struct StockInstrument: Equatable, Sendable {
     public let symbol: Symbol
+    
+    public init(symbol: Symbol) {
+        self.symbol = symbol
+    }
 }

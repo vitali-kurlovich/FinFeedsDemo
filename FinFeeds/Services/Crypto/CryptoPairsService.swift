@@ -3,5 +3,5 @@
 //
 
 public nonisolated protocol CryptoPairsService: Sendable {
-    func cryptoPairs() async throws(RestError) -> [CryptoPair]
+    func cryptoPairs() async throws(FetchError) -> [CryptoPair]
 }

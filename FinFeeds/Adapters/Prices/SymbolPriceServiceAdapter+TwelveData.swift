@@ -14,7 +14,7 @@ nonisolated struct TwelveDataSymbolPriceAdapter: SymbolPriceService, Sendable {
     private let repository: TwelveDataSymbolPriceRepository
     private let connectivityService: TwelveDataConnectivityAdapter
 
-    init(apiKeyService: any ApiKeyService) {
+    init(apiKeyService: any TwelveDataApiKeyService) {
         let apiKey = apiKeyService.apiKey
         let websocket = TwelveDataWebsocket(apiKey: apiKey)
 
@@ -63,7 +63,7 @@ private actor TwelveDataSymbolPriceRepository {
     private let socket: TwelveDataWebsocket
     private let subscriptionReducer = CountedSetReducer<String>()
 
-    private let apiKeyService: any ApiKeyService
+    private let apiKeyService: any TwelveDataApiKeyService
 
     private var updateApiKeyTask: Task<Void, Never>?
 
@@ -71,7 +71,7 @@ private actor TwelveDataSymbolPriceRepository {
         updateApiKeyTask?.cancel()
     }
 
-    init(_ socket: TwelveDataWebsocket, apiKeyService: any ApiKeyService) {
+    init(_ socket: TwelveDataWebsocket, apiKeyService: any TwelveDataApiKeyService) {
         self.socket = socket
         self.apiKeyService = apiKeyService
         Task {
