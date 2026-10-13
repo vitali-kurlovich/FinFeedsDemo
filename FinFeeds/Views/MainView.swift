@@ -2,6 +2,8 @@
 //  Created by Kurlovich Vitali on 10/2/26.
 //
 
+import CoreLayer
+import DataLayer
 import SwiftData
 import SwiftUI
 import TwelveDataAdapter
@@ -15,15 +17,6 @@ enum AppTab: Hashable {
 struct MainView: View {
     @Environment(\.apiKeyService)
     private var apiKeyService
-
-    @Environment(\.symbolPriceService)
-    private var symbolPriceService
-
-    @Environment(\.modelContext)
-    private var modelContext
-
-    @Environment(\.swiftDataSymbolPriceCoordinator)
-    private var priceRepository
 
     @State
     private var isReady: Bool = false
@@ -54,14 +47,6 @@ struct MainView: View {
             }.badge(isReady ? nil : Text("!"))
         }
         .statusBar()
-        .onAppear {
-            priceRepository
-                .start(service: symbolPriceService, context: modelContext)
-        }
-        .onDisappear {
-            priceRepository.stop()
-        }
-
         .task {
             self.isReady = apiKeyService.isReady
 
@@ -75,5 +60,3 @@ struct MainView: View {
         }
     }
 }
-
-// SwiftDataymbolPriceRepository(context: modelContext, service: symbolPriceService)

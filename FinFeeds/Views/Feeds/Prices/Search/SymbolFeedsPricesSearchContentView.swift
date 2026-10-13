@@ -25,6 +25,9 @@ struct SymbolFeedsPricesSearchContentView: View {
     @Environment(\.swiftDataSync)
     private var swiftDataSync
 
+    @Environment(\.feedSubscribtionsUpdater)
+    private var feedSubscribtionsUpdater
+
     @Query
     private var dataModel: [SymbolsStorage]
 
@@ -32,11 +35,8 @@ struct SymbolFeedsPricesSearchContentView: View {
         dataModel.filter { $0.type == symbolType }.first
     }
 
-    @Binding
-    private var subscriptions: Set<String>
-
     @State
-    private var selectedItems = Set<FeedsUpdate.ID>()
+    private var selectedItems = Set<Symbol.ID>()
 
     @Binding
     private var searchText: String
@@ -44,20 +44,15 @@ struct SymbolFeedsPricesSearchContentView: View {
     @State
     private var symbolType: SymbolType = .forex
 
-    @State
-    var feedsUpdates = SwiftDataFeedsObserver()
-
     init(
-        _ subscriptions: Binding<Set<String>>,
         searchText: Binding<String>
     ) {
-        _subscriptions = subscriptions
         _searchText = searchText
     }
 
     var body: some View {
         SymbolFeedPricesListView(
-            updates: feedsUpdates.updates,
+            symbols: symbols,
             selectedItems: $selectedItems
         )
         .contextMenu {
@@ -67,15 +62,7 @@ struct SymbolFeedsPricesSearchContentView: View {
                 Label("Add Selected", systemImage: "bag.badge.plus")
             }.disabled(selectedItems.isEmpty)
         }
-        .onChange(of: searchText) {
-            feedsUpdates.subscribed = filteredSubscriptions
-        }
-        .onChange(of: storage) {
-            feedsUpdates.subscribed = filteredSubscriptions
-        }
         .onChange(of: symbolType) {
-            feedsUpdates.subscribed = filteredSubscriptions
-
             Task {
                 do {
                     try await syncCoreData(type: symbolType)
@@ -84,19 +71,6 @@ struct SymbolFeedsPricesSearchContentView: View {
                     print(error)
                 }
             }
-        }
-        .onAppear {
-            do {
-                try feedsUpdates
-                    .start(
-                        context: modelContext,
-                        subscribed: filteredSubscriptions
-                    )
-            } catch {
-                // TODO: Logging error
-            }
-        }.onDisappear {
-            feedsUpdates.stop()
         }
         .toolbar {
             ToolbarItem(placement: .principal) {
@@ -114,11 +88,35 @@ struct SymbolFeedsPricesSearchContentView: View {
 }
 
 private extension SymbolFeedsPricesSearchContentView {
+    var symbols: [Symbol] {
+        let symbols: Set<String>
+
+        if searchText.isEmpty {
+            symbols = storage?.symbols ?? []
+        } else {
+            symbols = storage?.symbols.filter {
+                $0.localizedCaseInsensitiveContains(searchText)
+            } ?? []
+        }
+
+        return symbols.lazy.map {
+            Symbol($0)
+        }.sorted(by: \.id)
+    }
+
     func addSelected() {
-        withAnimation {
-            let selected = selectedItems.map { $0.id }
-            subscriptions = subscriptions.union(selected)
-            selectedItems = []
+        Task {
+            do {
+                let subscriptions = storage?.symbols.filter { selectedItems.contains($0) } ?? []
+
+                let insert = subscriptions.map { Symbol($0) }
+
+                try await feedSubscribtionsUpdater.insert(subscriptions: Set(insert))
+
+            } catch {}
+            withAnimation {
+                selectedItems = []
+            }
         }
     }
 
@@ -144,26 +142,6 @@ private extension SymbolFeedsPricesSearchContentView {
             // TODO: Logging errors
 
             print(error)
-        }
-    }
-}
-
-private extension SymbolFeedsPricesSearchContentView {
-    var filteredSubscriptions: Set<String> {
-        guard let storage else {
-            return []
-        }
-        let symbols = storage.symbols
-
-        return filterd(symbols: symbols)
-    }
-
-    func filterd(symbols: Set<String>) -> Set<String> {
-        if searchText.isEmpty {
-            return symbols
-        }
-        return symbols.filter {
-            $0.localizedCaseInsensitiveContains(searchText)
         }
     }
 }

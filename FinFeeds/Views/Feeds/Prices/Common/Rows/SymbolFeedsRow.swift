@@ -4,40 +4,52 @@
 
 import DataLayer
 import Foundation
-import SwiftData
 import SwiftUI
 
 struct SymbolFeedsRow: View {
-    private let update: FeedsUpdate
+    let symbol: Symbol
 
-    @Environment(\.symbolPriceService)
-    private var service
+    @State
+    private var update: CachableItem<FeedsUpdate> = .none
 
-    init(_ update: FeedsUpdate) {
-        self.update = update
+    @Environment(\.feedsUpdateWatcher)
+    private var feedsUpdateWatcher
+
+    init(symbol: Symbol) {
+        self.symbol = symbol
     }
 
     var body: some View {
         Text(text)
             .foregroundStyle(fill)
             .contentTransition(.interpolate)
-            .onAppear {
-                service.subsribe([update.symbol.id])
-            }
-            .onDisappear {
-                service.unsubsribe([update.symbol.id])
-            }
             .animation(.bouncy, value: update)
+            .task {
+                for await feed in feedsUpdateWatcher(symbol: symbol) {
+                    self.update = feed
+                }
+            }
     }
 }
 
 private extension SymbolFeedsRow {
     var text: String {
-        update.symbol.description
+        symbol.description
+    }
+
+    var price: Decimal? {
+        switch update {
+        case .none:
+            return nil
+        case let .cached(feed):
+            return feed.price
+        case let .original(feed):
+            return feed.price
+        }
     }
 
     var isPriceExists: Bool {
-        update.price != nil
+        price != nil
     }
 
     var fill: some ShapeStyle {

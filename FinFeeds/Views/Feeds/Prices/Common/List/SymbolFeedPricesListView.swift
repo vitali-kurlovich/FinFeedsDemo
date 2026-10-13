@@ -2,10 +2,11 @@
 //  Created by Kurlovich Vitali on 10/4/26.
 //
 
+import DataLayer
 import SwiftUI
 
 struct SymbolFeedPricesListView: View {
-    let updates: [FeedsUpdate]
+    let symbols: [Symbol]
 
     #if os(macOS)
         let isCompact = false
@@ -20,20 +21,20 @@ struct SymbolFeedPricesListView: View {
     #endif
 
     @Binding
-    var selectedItems: Set<FeedsUpdate.ID>
+    var selectedItems: Set<Symbol.ID>
 
     var body: some View {
-        Table(updates, selection: $selectedItems) {
-            TableColumn("Symbol") { update in
-                SymbolFeedsRow(update)
+        Table(symbols, selection: $selectedItems) {
+            TableColumn("Symbol") { symbol in
+                SymbolFeedsRow(symbol: symbol)
             }
             .width(min: 44, max: 200)
-            TableColumn("Price") { update in
-                SymbolFeedsPriceRow(update)
+            TableColumn("Price") { symbol in
+                SymbolFeedsPriceRow(symbol: symbol)
             }
             if isCompact == false {
-                TableColumn("Last Update") { update in
-                    SymbolFeedsTimestampRow(update)
+                TableColumn("Last Update") { symbol in
+                    SymbolFeedsTimestampRow(symbol: symbol)
                 }
             }
         }

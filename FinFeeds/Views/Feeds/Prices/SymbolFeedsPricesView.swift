@@ -2,15 +2,13 @@
 //  Created by Kurlovich Vitali on 10/1/26.
 //
 
+import DataLayer
 import SwiftData
 import SwiftUI
 
 struct SymbolFeedsPricesView: View {
-    @Environment(\.modelContext)
-    private var modelContext
-
-    @Query
-    private var subscriptionsStorage: [FeedsSubscriptions]
+    @Environment(\.feedSubscribtionsUpdater)
+    private var feedSubscribtionsUpdater
 
     @State
     private var searchText: String = ""
@@ -21,26 +19,11 @@ struct SymbolFeedsPricesView: View {
     @FocusState
     private var searchFocused: Bool
 
-    var subscriptionsBinding: Binding<Set<String>> {
-        .init(get: {
-            subscriptionsStorage.first?.subscriptions ?? []
-        }, set: { subscriptions in
-            if let feeds = subscriptionsStorage.first {
-                feeds.subscriptions = subscriptions
-
-            } else {
-                let feeds = FeedsSubscriptions(subscriptions: subscriptions)
-                modelContext.insert(feeds)
-            }
-        })
-    }
-
     var body: some View {
-        SymbolFeedsPricesContentView(subscriptionsBinding)
+        SymbolFeedsPricesContentView()
             .overlay {
                 if isSearchPresented {
                     SymbolFeedsPricesSearchContentView(
-                        subscriptionsBinding,
                         searchText: $searchText
                     )
                 }
@@ -51,6 +34,13 @@ struct SymbolFeedsPricesView: View {
                 searchFocused = isSearchPresented
                 if isSearchPresented == false {
                     searchText = ""
+                }
+            }
+            .task {
+                do {
+                    try await feedSubscribtionsUpdater.prefetch()
+                } catch {
+                    // TODO: Logging errors
                 }
             }
     }

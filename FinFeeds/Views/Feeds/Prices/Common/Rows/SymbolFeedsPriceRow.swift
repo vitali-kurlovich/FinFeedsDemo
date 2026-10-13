@@ -2,16 +2,22 @@
 //  Created by Kurlovich Vitali on 10/3/26.
 //
 
+import DataLayer
 import Foundation
-import SwiftData
 import SwiftUI
 
-struct SymbolFeedsPriceRow: View, Equatable {
-    private let update: FeedsUpdate
+struct SymbolFeedsPriceRow: View {
+    let symbol: Symbol
 
-    init(_ update: FeedsUpdate) {
-        self.update = update
+    init(symbol: Symbol) {
+        self.symbol = symbol
     }
+
+    @State
+    private var update: CachableItem<FeedsUpdate> = .none
+
+    @Environment(\.feedsUpdateWatcher)
+    private var feedsUpdateWatcher
 
     var body: some View {
         HStack {
@@ -20,10 +26,16 @@ struct SymbolFeedsPriceRow: View, Equatable {
             Spacer()
             Image(systemName: changes == .up ? "arrowtriangle.up.fill" : "arrowtriangle.down.fill")
                 .contentTransition(.symbolEffect(.replace))
-                .opacity(changes == .neutral ? 0 : 1)
+                .opacity((changes == .neutral || changes == .unknown) ? 0 : 1)
         }
         .foregroundStyle(fill)
         .animation(.bouncy, value: update)
+        .task {
+
+            for await feed in feedsUpdateWatcher(symbol: symbol) {
+                self.update = feed
+            }
+        }
     }
 }
 
@@ -33,11 +45,25 @@ private extension SymbolFeedsPriceRow {
     }
 
     var price: Decimal? {
-        update.price
+        switch update {
+        case .none:
+            return nil
+        case let .cached(feed):
+            return feed.price
+        case let .original(feed):
+            return feed.price
+        }
     }
 
     var changes: PriceChange {
-        update.changes
+        switch update {
+        case .none:
+            return .unknown
+        case let .cached(feed):
+            return feed.changes
+        case let .original(feed):
+            return feed.changes
+        }
     }
 
     var fill: some ShapeStyle {
@@ -48,6 +74,8 @@ private extension SymbolFeedsPriceRow {
             Color.green.gradient
         case .down:
             Color.red.gradient
+        case .unknown:
+            Color.secondary.gradient
         }
     }
 

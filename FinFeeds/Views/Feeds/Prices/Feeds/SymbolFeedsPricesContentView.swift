@@ -8,28 +8,15 @@ import SwiftData
 import SwiftUI
 
 struct SymbolFeedsPricesContentView: View {
-    @Environment(\.modelContext)
-    private var modelContext
-
-    @Binding
-    private var subscriptions: Set<String>
+    @Environment(\.feedSubscribtionsUpdater)
+    private var feedSubscribtionsUpdater
 
     @State
-    private var selectedItems = Set<FeedsUpdate.ID>()
-
-    @State
-    var feedsUpdates = SwiftDataFeedsObserver()
-
-    init(
-        _ subscriptions: Binding<Set<String>>
-
-    ) {
-        _subscriptions = subscriptions
-    }
+    private var selectedItems = Set<Symbol.ID>()
 
     var body: some View {
         SymbolFeedPricesListView(
-            updates: feedsUpdates.updates,
+            symbols: feedSubscribtionsUpdater.subscriptions,
             selectedItems: $selectedItems
         )
         .contextMenu {
@@ -39,18 +26,7 @@ struct SymbolFeedsPricesContentView: View {
                 Label("Remove", systemImage: "trash")
             }.disabled(selectedItems.isEmpty)
         }
-        .onChange(of: subscriptions) {
-            feedsUpdates.subscribed = subscriptions
-        }
-        .onAppear {
-            do {
-                try feedsUpdates.start(context: modelContext, subscribed: subscriptions)
-            } catch {
-                // TODO: Logging error
-            }
-        }.onDisappear {
-            feedsUpdates.stop()
-        }
+
         #if os(macOS)
         .onDeleteCommand {
             removeSelected()
@@ -59,9 +35,16 @@ struct SymbolFeedsPricesContentView: View {
     }
 
     func removeSelected() {
-        withAnimation {
-            let removedSymbols = selectedItems.map { $0.id }
-            subscriptions = subscriptions.subtracting(removedSymbols)
+        Task {
+            let subscriptions = feedSubscribtionsUpdater.subscriptions
+
+            let remove = subscriptions.filter { selectedItems.contains($0.id) }
+            do {
+                try await feedSubscribtionsUpdater
+                    .remove(subscriptions: Set(remove))
+            } catch {
+                // TODO: Logging error
+            }
         }
     }
 }
