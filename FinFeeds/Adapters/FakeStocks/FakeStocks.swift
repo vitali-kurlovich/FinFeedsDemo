@@ -4,11 +4,8 @@
 
 import DataLayer
 
-
 nonisolated struct FakeStocks: StocksService {
     func stocks() async throws(DataLayer.FetchError) -> [DataLayer.StockInstrument] {
         return ["AAPL", "RY:TSX", "TSLA"].map { StockInstrument(symbol: Symbol($0)) }
     }
-
-    
 }

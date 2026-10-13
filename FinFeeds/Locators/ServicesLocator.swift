@@ -11,13 +11,15 @@ struct ServicesLocator {
 
 extension ServicesLocator {
     static let apiKeyService: any TwelveDataApiKeyService = TwelveDataApiKey()
-    
+
     static let locator = TwelveDataServiceLocator(apiKeyService: Self.apiKeyService)
-    
 }
 
-
 extension ServicesLocator {
+    static var feedsSuscriberService: any FeedsSubscribeService {
+        locator.feedsSubscribeService
+    }
+
     static var symbolPriceService: any SymbolPriceService {
         locator.symbolPriceService
     }
