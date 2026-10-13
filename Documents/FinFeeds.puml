@@ -1,0 +1,82 @@
+@startuml
+
+title FinFeeds
+
+
+package "demo-core-layer" {
+    [CoreLayer]
+}
+
+package "demo-service-layer" {
+    [DataLayer]
+}
+
+package "demo-twelvedata-service-layer" {
+    component TwelveDataAdapter {
+        [TwelveDataServiceLocator]
+    }
+
+
+}
+
+package "swift-twelvedata" {
+    [TwelveDataStream]
+    [TwelveDataREST]
+}
+
+
+package "swift-logging-bootstrap" {
+    [LoggingBootstrap]
+    [LoggingBootstrapUI]
+}
+
+package "swift-io-stream" {
+    [StreamWebSocket]
+}
+
+
+
+package "App" {
+    component FinFeeds {
+        [Presentation Layer]
+        component AppData {
+
+            database "SwiftData" {
+
+            }
+
+            interface "Data Adapters" as DataAdapters
+
+            [SwiftData] <-up- DataAdapters
+
+            
+            [ServiceLocator]
+
+            DataAdapters -> [ServiceLocator]
+        }
+    }
+}
+
+[DataLayer] ..> [CoreLayer]
+
+[TwelveDataAdapter] <|.. [DataLayer]
+
+[TwelveDataStream] *-- [StreamWebSocket]
+[TwelveDataAdapter] *-- [TwelveDataStream]
+[TwelveDataAdapter] *-- [TwelveDataREST]
+
+
+[TwelveDataServiceLocator] ..> [ServiceLocator]
+
+[ServiceLocator] *-- [DataLayer]
+
+
+[Presentation Layer] ..> [ServiceLocator] : use
+
+[Presentation Layer] *-- [LoggingBootstrapUI]
+[Presentation Layer] *-- [LoggingBootstrap]
+[AppData] *-- [LoggingBootstrap]
+
+[Presentation Layer] --> DataAdapters
+
+@enduml
