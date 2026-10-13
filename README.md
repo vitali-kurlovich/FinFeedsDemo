@@ -18,3 +18,5 @@ https://github.com/user-attachments/assets/b9f65996-85b6-4d14-bfac-31dbbba886e7
  
  - [StreamWebSocket](https://github.com/vitali-kurlovich/swift-io-stream)  (In the my repository: [https://github.com/vitali-kurlovich/swift-io-stream](https://github.com/vitali-kurlovich/swift-io-stream)) - WebSocket wrapper
  
+
+<img  alt="image" src="https://raw.githubusercontent.com/vitali-kurlovich/FinFeedsDemo/cd0dca19dc8e119468ccc77191035f25c7673bb0/Documents/out/FinFeeds/FinFeeds.svg" />
