@@ -2,6 +2,9 @@
 
 title FinFeeds
 
+' configuration
+hide circle
+skinparam linetype ortho
 
 package "demo-core-layer" {
     [CoreLayer]
@@ -42,14 +45,13 @@ package "App" {
         component AppData {
 
             database "SwiftData" {
-
+                
             }
 
             interface "Data Adapters" as DataAdapters
 
             [SwiftData] <-up- DataAdapters
 
-            
             [ServiceLocator]
 
             DataAdapters -> [ServiceLocator]
@@ -61,21 +63,23 @@ package "App" {
 
 [TwelveDataAdapter] <|.. [DataLayer]
 
-[TwelveDataStream] *-- [StreamWebSocket]
-[TwelveDataAdapter] *-- [TwelveDataStream]
-[TwelveDataAdapter] *-- [TwelveDataREST]
+[TwelveDataStream] *--> [StreamWebSocket]
+[TwelveDataAdapter] *--> [TwelveDataStream]
+[TwelveDataAdapter] *--> [TwelveDataREST]
 
 
 [TwelveDataServiceLocator] ..> [ServiceLocator]
 
-[ServiceLocator] *-- [DataLayer]
+[ServiceLocator] *--> [DataLayer]
 
 
 [Presentation Layer] ..> [ServiceLocator] : use
 
-[Presentation Layer] *-- [LoggingBootstrapUI]
-[Presentation Layer] *-- [LoggingBootstrap]
-[AppData] *-- [LoggingBootstrap]
+[Presentation Layer] *--> [LoggingBootstrapUI]
+[FinFeeds] *--> [LoggingBootstrap]
+
+[AppData] *--> [CoreLayer]
+
 
 [Presentation Layer] --> DataAdapters
 
